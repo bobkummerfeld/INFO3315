@@ -1,0 +1,737 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>INFO2315 Assess</title>
+<base href="http://127.0.0.1/lib_html/index.cgi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<!-- 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+-->
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+.list-group{
+	width: 100px;
+}
+.bs-example{
+   	margin: 20px;
+}
+</style>
+<style type="text/css">
+
+img {max-width:100%}
+
+
+
+
+.tooltip {
+    display:none;
+    background:transparent url(/media/img/tooltip/black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#eee;
+}
+
+body {
+	margin: 0;
+/*	background-color: #e6e6e6;	*/
+	background-color: #ffffff;
+	border: 0;
+	padding: 2px;
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.frame {
+ }
+.framedata { }
+.column { }
+.columndata { }
+.cell { padding: 10px; }
+
+.loginbanner {
+	background-color: #fed;
+	border:	1px solid #dcb;
+	padding: 0px 5px 2px 5px;
+	font-size: 80%; font-weight: bold;
+	color: #39628b;
+}
+.cellbanner {
+	background-color: #fff;
+	/*border:	1px solid #fff; */
+/*
+	border-right:  1px solid #b0b0b0;
+	border-top: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 0px 5px 2px 5px;
+	font-size: 120%; font-weight: bold;
+	color: #39628b;
+}
+.cellbody {
+	background-color: #fff;
+/*
+	border-right:  1px solid #b0b0b0;
+	border-bottom: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 10px;
+}
+
+/* order is important */
+/*
+a:link { color: darkblue; }
+*/
+a:visited { color: darkblue; }
+a:hover { color: blue; }
+a:active { color: blue; }
+
+a.non { text-decoration: none; }
+a.smallnon { font-size: 80%; text-decoration: none; }
+
+p.hang {
+	text-indent: -1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.spaced { margin-bottom: 20px; }
+p { margin-bottom: 20px; }
+div.boxed {
+	text-indent: 1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 20;
+	border: 5px solid gray;
+	width:"50%";
+}
+
+
+pre.darkgreen { color: darkgreen; }
+pre.darkblue { color: darkblue; }
+
+span.logname {
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.logtext {
+	font-size: 80%;
+}
+
+span.sestext {
+	font-size: 80%;
+	color: darkblue;
+}
+
+button.logout {
+	padding: 0;
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+	float: right;
+}
+
+button.darkblue {
+	padding: 0;
+	font-weight: bold;
+	color: darkblue;
+}
+
+table.role { margin: 2px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+td.role { text-align: center; font-size: 100%; font-weight: bold; color: #fff; }
+td img.decor { display: block; }
+
+a.external { text-decoration: none; }
+a.external:link { color: #fff }
+a.external:visited { color: #fff }
+a.external:hover { color: #ffc }
+a.external:active { color: #ffc }
+
+span.edit { float: right; }
+a.edit { text-decoration: none; color: #dcb; }
+a.edit:hover { color: blue; }
+a.edit:active { color: blue; }
+</style>
+<script type="text/javascript">//<![CDATA[
+
+var cell_long = "Images/glyphicons_368_collapse.png"
+var cell_short = "Images/glyphicons_369_collapse_top.png"
+
+function expandCollapse(eltid)
+{
+	var element = document.getElementById(eltid);
+	var imgelement = document.getElementById("IMG"+eltid);
+	if (element.style.display == "none")
+	{
+		element.style.display = "block";
+		imgelement.src = cell_short;
+	}
+	else
+	{
+		element.style.display = "none";
+		imgelement.src = cell_long;
+	}
+	
+}
+
+
+$(function() {
+$( document ).tooltip();
+});
+//]]></script>
+
+</head>
+
+<body>
+
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="frame"><tr>
+
+<!-- Top START -->
+<td class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="role">
+  <tr>
+    <td colspan="3">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==
+" width="1" height="1" alt="" hspace="375" vspace="0" class="decor">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="data:image/gif;base64,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
+" width="227" height="52" alt="The University of Sydney" title="University Home Page" border="0" class="decor">
+      </a>
+    </td>
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="data:image/gif;base64,R0lGODlhaAE0ALMAAD5mjkJpkEFokDtjjDtkjDpjiz9njz1ljTxkjUBojzlii0NqkQAAAAAAAAAA
+AAAAACH5BAAAAAAALAAAAABoATQAAAT/cMlJq7046827z4AijmRpjsOXCcjpvmKqanBt33iu7zw+
+/8CgECjolQJDAcH4GlISzKh0SqU6r9isKhQ9CAOtKgkbGIjP6HRVy267uUwksaCWOQ/q/IBAAPgN
+AoGCgQEBg4MJfgAHfHR5Nm6RkkJLTAhBBo8AV3iPUQQIfgJykwuGiQiVniKlra4ZjkYGQJl6pEBg
+qzkFfQCjrx0BiappCwkDAwC3wJEBB7zLV7VxP0WPAklmui8DB77RzCoCAMRUAbEKCAbg4UEBANoi
+XmzlO3YfZZpfndsk3YDt2gh7RmVaiVDsAm5IFK8EGzhG5m3RhwsAulUDQmFT2MpAvR0Q/08UOLCO
+4wpyNjZeOSdl04yLYmb9eAezDoAECU02I9jjo4t/OVuN8+lC5RCWUmR+gJJmQFALATzq6vNLJ0ea
+PIjCAPpqqBGjQQTU5AGWA78qBVxyEAYAQUM1VK3KneBsh9YbyRK4iYpgbI6yKupWAazhro607Az5
+IfBWz825kCsIaPzCMI4CTz+EjEJYg2LKnGeAzopEkB9Go+scwBm5dQXBNjZTyyL7q4d8njpjsNxP
+CkLXwC8YfFGbx70r1qx4CONJrYfivaPkDU4dw/ATyX2zCYD2wzbnwaKL6ZO5uuvrR+BNAX8lNQ4C
+uitsk/jhrPgdI1mb358B/YgJCfDUQ/98P/B2QjLlScDdVDO5d18JCPIn4Qb2jSGZejsk+BwPv820
+TQG4+PVgDMpMaKJnoGUQ1QEOstIGdCTE5cQJ31DwmREa0iVidBGe6OMKLgRjAIYHupFdCbz4wgZ2
+GkzGA3u3GWhTjtQZMs5ijeDFhyhUDiFbNRUSsJcJA5QUCZMo2uPljk2V+KMhQ5IjpT0AmDkJUhbO
+cKQCYrphQp+SoNkkD0pV1GIUBajTpUJwLsLYiAr0GMl1RJgA5RV/liKoBoeigEUCzFGRpJ1VCjBk
+KpDWgACBQbxVaQmXzlgCoGOakBmMNGoxjD2g1FlVqYuxmaoJCCyqwXCvkhDrEGROsqf/Ah48WwNm
+e10ZiiI3ETLhlQQIO+y0erXRULIjLCvECZN82YG0NTj1453juPWtGoViYRC5IpgbRD2TNHYckD1c
+8q4W8XY6LxP1XhELvgroC0RjksgmMAe4vkDfwDOwNefBUlCrBT8MO/wDunvVJHKopGH8wTgGc3zG
+xU4sCG01JsCMBclt+MSqzEy4qzIGK3rr8iPGXuAIw/+uhLMWtYHYAcpGpPWzjUQOPWzCQ3TCsAJF
+X6CuFniWgLUF/hlBQNdWMWS1yyJvOLOeJ4wtBGUvvoDYChvfcADa7QQo9Nq90Yqci3CTybcEzzqt
+BdRkeoOtvJ7szZ/fgAMuOKZvi+NC/9sb4DarQH+Lh0C4rlFeeeWXO0HH1iLIrYJPqcdcocuSmsRX
+6Kc/yHkHS7Auj7HHVCaJErl3ox8z77Sce6qHT9C7h+3WuJYBLNYQexZOLp9X81C1hfvyqe7Oe+Yq
+dLrHtdjKqYP4GSufapLShzVk3uB/6zM95Gt2n8elBED/wXvohSIOga0s1e+AhovE84DwP1kwY3YI
+jKAEjcM9CpjhC+5zYDgYN8EOejBXkyAcLjK4A9dJgmcfTGEKJXcnEeICgmgx4SS+p8IafmskFRRO
+61ilgYr14H5BcFOBbEjE5SVKhh9DQdfEgoZiOQEKQPxAA4tIRbgoqR3omNg+qlCmlVU4ImkcIGEV
+xyidPpCqbzUjwzgY8SgbBNAPfPNcw0ZGxjqKIYBb8kMCfiUXxrFPBbXgXzMag0QA2aCQU0ukIm1k
+sTvF4o/BAE2CYCiPRVrykoUhQQQAADs=
+" width="227" height="52" alt="" title="University Home Page" border="0" class="decor">
+      </a>
+    </td>
+    <td width="1000" class="role">
+      <a class="external" href="http://www.it.usyd.edu.au">
+        School&nbsp;of&nbsp;Information&nbsp;Technologies&nbsp;
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="height:100px"> </div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Top END -->
+
+</tr><tr>
+
+<!-- Column 1 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td style="position:fixed;  width:120px;height:50px;top:80px;left:7px;  z-index:0" id="menucell" class="columndata">
+
+<!-- Cell START -->
+<script>
+var sessionname = "INFO2315";
+function gothere(where)
+{
+	var i = location.href.lastIndexOf('/');
+	var leading = location.href.slice(0,i);
+	if (location.pathname.slice(-4) == '.cgi')
+	{
+	        location.assign(leading+"/"+"index.cgi?"+where);
+	}
+	else
+	{
+		location.assign(leading+"/"+sessionname+"_"+where+".html");
+	}
+}
+</script>
+
+<div class="bs-example">
+    <div class="list-group" style="width:110px;">
+
+
+		<a href="javascript: gothere('Home');" class="list-group-item ">
+			Home
+		</a>
+		
+
+		<a href="javascript: gothere('Resources');" class="list-group-item ">
+			Resources
+		</a>
+		
+
+		<a href="javascript: gothere('Assess');" class="list-group-item active">
+			Assess
+		</a>
+		
+
+		<a href="javascript: gothere('Results');" class="list-group-item ">
+			Results
+		</a>
+		
+
+		<a href="javascript: gothere('Piazza');" class="list-group-item ">
+			Piazza
+		</a>
+		
+
+		<a href="javascript: gothere('About');" class="list-group-item ">
+			About
+		</a>
+		
+</div>
+</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 1 END -->
+
+
+<!-- Column 2 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="min-width: 160px"> &nbsp; </div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 2 END -->
+
+
+<!-- Column 3 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/lib_html/index.cgi?Context=Admin/Edit&amp;_Context=Assess/2.0_assess&amp;Return=Assess" class="edit">
+			edit
+		</a></span>
+Assessment
+</td></tr><tr><td class="cellbody">
+The final exam is worth 60% of the course mark. The remaining 40% is
+earned through participation and assignments as described in the unit outline.
+<br>
+<br>
+Laboratory Participation - 5%<br>
+Assignment 1 - 10%, individual assignment due in week 7.<br>
+Assignment 2 - 10%, individual assignment due in week 10.<br>
+Assignment 3 - 15%, group report and presentation in week 11,12 or 13).<br>
+Examination - 60%<br>
+
+<p><hr><p>
+<b>Please note:</b>
+It is a policy of the School of Information Technologies that in order
+to pass this unit, a student must achieve at least 24/60 (40%) in the final
+examination and at least 16/40 (40%) in the combined mark for the assignments and class participation.
+A student must also achieve an overall final mark equal or greater than 50/100. Any
+student not meeting these requirements can achieve a maximum mark of no more than 45.
+<p>
+You should also read the <a href="http://www.it.usyd.edu.au/current_students/undergrad/policies/academic_honesty.shtml">
+<b>policy</b></a> and advice regarding academic honesty and performance on assessable items. 
+<P>
+In fairness to all students <I><B>late work cannot be accepted</B></I>.
+In exceptional cases late work must be submitted directly to a course
+coordinator after a lecture, accompanied by an application for Special
+Consideration following your faculty system.
+<br>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/lib_html/index.cgi?Context=Admin/Edit&amp;_Context=Assess/2.1_asst1&amp;Return=Assess" class="edit">
+			edit
+		</a></span>
+ <div id="TIPasst1"><img id="IMGasst1"  onclick="javascript: expandCollapse('asst1');" title="expand/collapse">&nbsp;&nbsp;Assignment 1 (due end of week 7) </div>
+        <script> var elt = document.getElementById("IMG"+"asst1"); elt.src = cell_long; $("#TIPasst1 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<p>This assignment is worth 10 marks, and it is due at 23:59pm on Friday
+September 12. The assignment should be handed in through eLearning
+(submitting a pdf file containing your answers). 
+Each assignment must be individual work, and you will need to make an academic honesty declaration. 
+You must include this signed document for your submission to be graded:
+<a href="http://sydney.edu.au/engineering/it/current_students/undergrad/policies/assignment_sheet_individual.pdf">
+http://sydney.edu.au/engineering/it/current_students/undergrad/policies/assignment_sheet_individual.pdf
+</a>
+<p>The assessment will be based on aspects such as correct use
+of terminology, answers that show evidence of understanding of the
+concepts covered in the unit, originality and sophistication of thought,
+answers that specifically address the question asked, and clarity of
+presentation. We do not impose any particular length limit on your
+answers; however, we expect that a good answer to each question can
+be provided in about half-a-page. If you write more than this for any
+question, you should be sure that you have enough different and worthwhile
+ideas to justify the length (or else you will lose marks because of lack
+of clarity in presentation).</p>
+
+<p><b>Question 1</b> [2 marks] This question concerns the main security
+goals (confidentiality, integrity, availability). Describe a situation
+in which the the goal of integrity is important, but there is not a need
+for confidentiality.
+</p>
+
+<p><b>Question 2</b> [2 marks] In a particular form of two-factor
+authentication, a user shows their identity by providing a password and
+then uses an app on their mobile phone to generate a security code that
+must be entered as well. Describe an attack that would succeed despite
+this particular two-factor approach.
+</p>
+
+<p><b>Question 3</b> [2 marks] It is not uncommon to receive email purporting to be from your
+bank stating that the online banking system has a problem and needs to be reset. 
+In order to do this you are requested to send your login name and password to a certain address.
+Write an explanation suitable for a friend who is not studying any computing
+courses, to help explain to them about the dangers of sending the requested information.
+</p>
+
+<p><b>Question 4</b> [2 marks] Some systems have a policy that every user
+must change their password at the beginning of every month.
+Discuss the impact of this policy on the normal work of the organization.
+Does the policy enhance security? What are the advantages and disadvantages of this policy?
+</p>
+<p><b>Question 5</b> [2 marks] A typical password is about 8 characters
+long (and so can be stored in 8 bytes, or 64 bits). However, a typical key
+for encryption/decryption is much longer, and a key of 64 bits would not
+be considered secure. Explain this in terms of the difference between the
+way a secret is used as a password, and the way it is used as a key. Hint:
+what happens if an attacker takes a few months to discover the secret?
+</p>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/lib_html/index.cgi?Context=Admin/Edit&amp;_Context=Assess/2.2_asst2&amp;Return=Assess" class="edit">
+			edit
+		</a></span>
+ <div id="TIPasst2"><img id="IMGasst2"  onclick="javascript: expandCollapse('asst2');" title="expand/collapse">&nbsp;&nbsp;Assignment 2 (due end of week 10) </div>
+        <script> var elt = document.getElementById("IMG"+"asst2"); elt.src = cell_long; $("#TIPasst2 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<p>This assignment is worth 10 marks, and it is due at 23:59pm on Friday
+10th October. The assignment should be handed in through eLearning
+(submitting a pdf file containing your answers). 
+Each assignment must be individual work, and you will need to make an academic honesty declaration. 
+You must include this signed document for your submission to be graded:
+<a href="http://sydney.edu.au/engineering/it/current_students/undergrad/policies/assignment_sheet_individual.pdf">
+http://sydney.edu.au/engineering/it/current_students/undergrad/policies/assignment_sheet_individual.pdf
+</a>
+<p>The assessment will be based on aspects such as correct use
+of terminology, answers that show evidence of understanding of the
+concepts covered in the unit, originality and sophistication of thought,
+answers that specifically address the question asked, and clarity of
+presentation. We do not impose any particular length limit on your
+answers; however, we expect that a good answer can
+be provided in two pages. If you write more than this for any
+question, you should be sure that you have enough different and worthwhile
+ideas to justify the length (or else you will lose marks because of lack
+of clarity in presentation).</p>
+
+
+<p>Web browsers are complicated pieces of software. 
+They have evolved into an environment for hosting complete applications that users rely on daily to perform privacy and security critical tasks.</p>
+
+<p>This assignment requires you to write a report comparing 
+privacy protection features that exist in recent versions of Firefox and Chrome.
+Perform a comparative analysis of the two browsers with respect to the privacy features. 
+Describe the strengths and weaknesses of the features in each browser.</p>
+
+<p>Please consider Mozilla Firefox version 30 or above and Chrome version 35 or above.</p>
+
+<p>You will need to perform independent research for this assignment. To find privacy features 
+you could check the release notes of each browser vendor. Google Scholar is a good way to find published articles, 
+try searching it to see if others have researched the feature you are writing a report on.</p>
+
+<p>Remember to appropriately cite any sources you use in your research.  </p>
+
+<h3>Marking criteria</h3>
+
+<h4>Content - 6 marks</h4>
+<p>To get 3/6 you will need to correctly describe the features, comparing two browsers with respect to the features.</p>
+<p>To obtain 5/6 you will need to do the above as well as describe a privacy breach prevented or mitigated by the feature, 
+as well as any possible disadvantages of the feature.</p>
+<p>6/6 is available for truly outstanding work.</p>
+
+<h4>Organisation and clarity - 4 marks</h4>
+<p>To gain 2/4 you will need to write clearly and with correct English.</p>
+<p>To obtain 3/4 you will need the above and you must organise the material clearly so that the reader finds it easy to get the material they need from your report.</p>
+<p>4/4 is available for truly outstanding work.</p>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/lib_html/index.cgi?Context=Admin/Edit&amp;_Context=Assess/2.3_asst3&amp;Return=Assess" class="edit">
+			edit
+		</a></span>
+ <div id="TIPasst3"><img id="IMGasst3"  onclick="javascript: expandCollapse('asst3');" title="expand/collapse">&nbsp;&nbsp;Assignment 3 (in class presentation in week 12 or 13) </div>
+        <script> var elt = document.getElementById("IMG"+"asst3"); elt.src = cell_long; $("#TIPasst3 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<p>
+This assignment requires students to prepare and
+deliver an oral presentation to the tutorial class. This is a group
+assignment, done in groups of 4 or 5.
+Presentation slots will be 15 minutes long and will
+take place during tutorials in weeks 12 or 13; slots will be
+allocated in week 11. The group must be available to present in whichever
+slot they are allocated. The group presentation must be no longer than 10 slides.
+Before the presentation one member of the
+group should email a pdf of the slides used to their tutor;
+also you must hand to the tutor a signed 
+<a href="http://www.it.usyd.edu.au/current_students/undergrad/policies/assignment_sheet_group.pdf">group
+academic honesty form</a>.
+The assignment is worth 15 marks.
+</p>
+
+<p>The assignment requires you to present to the class an account of a
+recent innovation in security. This could be a new attack, or a new
+defence, or a new technology. Your presentation should describe the
+innovation, and discuss some stakeholders, and how they are affected by
+the innovation. The innovation must have been first reported in 2013 or
+later.</p>
+
+<h3>Marking Criteria</h3>
+<p>There are 4 marks for the description of the innovation. To gain 2
+out of 4, you will need to show a good knowledge of the relevant
+material. To gain 3 out of 4 you will need to show that you have
+integrated the knowledge into a coherent understanding of the topic,
+and of how it differs from the previous state-of-the-art. Full marks is
+available for truly outstanding work.</p>
+
+<p>There are 4 marks for description of the security impact on
+stakeholders. To gain 2 out of 4, you will need to show awareness of a
+range of stakeholders (not missing any important ones), and identify
+some of their security needs relevant to the innovation. To gain 3 out
+of 4 you will do the above, and show sophisticated analysis of the way
+the innovation will impact on the security goals of the stakeholders;
+as well, you will identify potential conflicts between their needs, or
+difficulties in meeting their needs. Full marks is available for truly
+outstanding work.</p>
+
+<p>There are 7 marks for the organization and delivery of your
+presentation. To gain 4 out of 7, you will need to have every member of
+the group speak for a reasonable part of the time, and be clearly
+understood by the listeners. To gain 5 out of 7, you will do the above,
+and also the presentation will be well-structured so the key points can
+be clearly identified by listeners, most speakers will project their
+voice well, and be fluent (not just reading from notes, etc). To gain 6
+out of 7 you will need to do all the above, and also you must engage
+the audience to hold their attention and enhance their interest. Full
+marks is available for truly outstanding work.</p>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 3 END -->
+
+</tr><tr>
+
+<!-- Bottom START -->
+<td class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;">
+<tr>
+    <td width="91%"></td>
+    <td valign=bottom>
+	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Tue Mar 31 17:10:47 2015</span></td>
+</tr></table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;"><tr><td width="99%">
+</td><td valign=middle>
+  <span style="font-family: helvetica,arial,sans-serif;font-size: 60%;"> Poweredby&nbsp;</span> 
+</td><td valign=bottom>
+  <a href="http://www.it.usyd.edu.au/~bob/web.cgi?Cellerator">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAIAAAD8q9/YAAAA40lEQVR4nOWXMQ7DIAxFPxVnxXOW
+DDlAhizMPi0dEIjapE1ISgbehJFl/S/bQTHOOYyEBcDMT8voBBHZdDQ31OOw+eWGOv9hnlYAr6dl
+9GY4w7ZyxwEohjyG+YbDx/yLMBHnB0AcchGWOflG5/xMaEAZzgZKJ00bLmRl53uHzS/5XE3QRRqo
+dTgi2ojTtqv90R2+UrOB/R3OkwyATEOTN7+UyrRKkXCw5lkZAmWYDDhUFrX0/z1MzNMqehiH9qCy
+mKyn91QRjXHOMfMg7zARDfcsDWc4faVrS9jAle3qgxntb+kN/vGFkIjMAnUAAAAASUVORK5CYII=
+" title="Cellerator Home" alt="[Cellerator]" width=80 height=15 border=0>
+  </a>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Bottom END -->
+
+</tr></table>
+
+<!-- Completed in 0.09 cpu / 0.06 wall seconds. -->
+</body></html>
