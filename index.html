@@ -9,9 +9,11 @@ alert("starting....");
 <script>
 document.getElementById('demo').innerHTML = location.hostname;
 alert("hostname: "+location.hostname);
-<!--
-location.assign("http://info3315.usydhci.info/INFO3315_2014/index.html");
--->
+if (location.hostname == "info3315.usydhci.info")
+{
+	alert("found host");
+	location.assign("http://info3315.usydhci.info/INFO3315_2014/index.html");
+}
 </script>
 </body>
 </html>
