@@ -1,0 +1,823 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>INFO3315 Lab3</title>
+<base href="http://bobkummerfeld.github.io/INFO3315/index.html">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<!-- 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+-->
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+.list-group{
+	width: 100px;
+}
+.bs-example{
+   	margin: 20px;
+}
+</style>
+<style type="text/css">
+
+img {max-width:100%}
+
+
+
+
+.tooltip {
+    display:none;
+    background:transparent url(/media/img/tooltip/black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#eee;
+}
+
+body {
+	margin: 0;
+/*	background-color: #e6e6e6;	*/
+	background-color: #ffffff;
+	border: 0;
+	padding: 2px;
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.frame {
+ }
+.framedata { }
+.column { }
+.columndata { }
+.cell { padding: 10px; }
+
+.loginbanner {
+	background-color: #fed;
+	border:	1px solid #dcb;
+	padding: 0px 5px 2px 5px;
+	font-size: 80%; font-weight: bold;
+	color: #39628b;
+}
+.cellbanner {
+	background-color: #fff;
+	/*border:	1px solid #fff; */
+/*
+	border-right:  1px solid #b0b0b0;
+	border-top: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 0px 5px 2px 5px;
+	font-size: 120%; font-weight: bold;
+	color: #39628b;
+}
+.cellbody {
+	background-color: #fff;
+/*
+	border-right:  1px solid #b0b0b0;
+	border-bottom: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 10px;
+}
+
+/* order is important */
+/*
+a:link { color: darkblue; }
+*/
+a:visited { color: darkblue; }
+a:hover { color: blue; }
+a:active { color: blue; }
+
+a.non { text-decoration: none; }
+a.smallnon { font-size: 80%; text-decoration: none; }
+
+p.hang {
+	text-indent: -1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.spaced { margin-bottom: 20px; }
+p { margin-bottom: 20px; }
+div.boxed {
+	text-indent: 1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 20;
+	border: 5px solid gray;
+	width:"50%";
+}
+
+
+pre.darkgreen { color: darkgreen; }
+pre.darkblue { color: darkblue; }
+
+span.logname {
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.logtext {
+	font-size: 80%;
+}
+
+span.sestext {
+	font-size: 80%;
+	color: darkblue;
+}
+
+button.logout {
+	padding: 0;
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+	float: right;
+}
+
+button.darkblue {
+	padding: 0;
+	font-weight: bold;
+	color: darkblue;
+}
+
+table.role { margin: 2px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+td.role { text-align: center; font-size: 100%; font-weight: bold; color: #fff; }
+td img.decor { display: block; }
+
+a.external { text-decoration: none; }
+a.external:link { color: #fff }
+a.external:visited { color: #fff }
+a.external:hover { color: #ffc }
+a.external:active { color: #ffc }
+
+span.edit { float: right; }
+a.edit { text-decoration: none; color: #dcb; }
+a.edit:hover { color: blue; }
+a.edit:active { color: blue; }
+</style>
+<script type="text/javascript">//<![CDATA[
+
+var cell_long = "Images/glyphicons_368_collapse.png"
+var cell_short = "Images/glyphicons_369_collapse_top.png"
+
+function expandCollapse(eltid)
+{
+	var element = document.getElementById(eltid);
+	var imgelement = document.getElementById("IMG"+eltid);
+	if (element.style.display == "none")
+	{
+		element.style.display = "block";
+		imgelement.src = cell_short;
+	}
+	else
+	{
+		element.style.display = "none";
+		imgelement.src = cell_long;
+	}
+	
+}
+
+
+$(function() {
+$( document ).tooltip();
+});
+//]]></script>
+
+</head>
+
+<body>
+
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="frame"><tr>
+
+<!-- Top START -->
+<td class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td width="100%" style="position:fixed;  top:0px;left:0px;  z-index:10" id="bannercell" class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="role" style="background:#12416C;">
+  <tr> 
+    <td colspan="3">
+      <img src="Images/pix.gif" width="1" height="1" alt="" hspace="275" vspace="0" class="decor">
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/university_sydney_logo.gif" width="200" height="80" alt="link to University of Sydney Web
+	Page"  border="0" class="decor">
+      </a>
+    </td>
+	<!--
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/top_banner_in02.gif" width="227" height="52" alt="" title="" border="0" class="decor">
+      </a>
+    </td>
+	-->
+    <td width="30%" align="center" class="role" style="padding-right:5px">
+    INFO3315 Human Computer Interaction<br />
+      <a class="external" href="http://www.it.usyd.edu.au">
+        School&nbsp;of&nbsp;Information&nbsp;Technologies
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="height:100px">X</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Top END -->
+
+</tr><tr>
+
+<!-- Column 1 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td style="position:fixed;  width:120px;height:50px;top:80px;left:7px;  z-index:0" id="menucell" class="columndata">
+
+<!-- Cell START -->
+<script>
+var sessionname = "INFO3315";
+function gothere(where)
+{
+	var i = location.href.lastIndexOf('/');
+	var leading = location.href.slice(0,i);
+	if (location.pathname.slice(-4) == '.cgi')
+	{
+		var j = location.href.lastIndexOf('?');
+		var scriptname = location.href.slice(i+1,j+1);
+	        location.assign(leading+"/"+scriptname+where);
+	}
+	else
+	{
+		location.assign(leading+"/"+sessionname+"_"+where+".html");
+	}
+}
+</script>
+
+<div class="bs-example">
+    <div class="list-group" style="width:110px;">
+
+
+		<a href="javascript: gothere('Home');" class="list-group-item ">
+			Home
+		</a>
+		
+
+		<a href="javascript: gothere('Assess');" class="list-group-item ">
+			Assess
+		</a>
+		
+
+		<a href="javascript: gothere('Resources');" class="list-group-item ">
+			Resources
+		</a>
+		
+
+		<a href="javascript: gothere('Labs');" class="list-group-item ">
+			Labs
+		</a>
+		
+</div>
+</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 1 END -->
+
+
+<!-- Column 2 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="min-width: 140px"> &nbsp; </div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 2 END -->
+
+
+<!-- Column 3 START -->
+<td width="90%" class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.00_lab3_intro&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+</td></tr><tr><td class="cellbody">
+<h1>
+Lab Week 3
+</h1>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.05_homework&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+<div>Homework</div>
+</td></tr><tr><td class="cellbody">
+<p>
+<ol>
+<li>
+As a foundation for your group to tackle the very important
+decision on the learning goal,
+identify three (3) topics you think would be interesting
+for the group to use as the learning context.
+(Remember from Week 1 that the learning task should be small enough for a person to complete
+in 15 minutes. And you need to be able to do a pre- and post- test to see what they actually did learn.)
+</li><li>
+For each of your three topic, find at least one resource that you consider
+to be a good foundation for discussions with your group.
+Bring this to the lab, ready to share.
+</li><li>
+Complete the environment setup tasks marked as homework below.
+If you have difficulty, you will be able to get help in the lab.
+</li>
+</ol>
+<p/>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.16_environment&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+<div>Setting up your environment</div>
+</td></tr><tr><td class="cellbody">
+In order to develop good user interfaces we need create the source code for programs and web pages. This means we have to create and debug a lot of text files.
+Sometimes we do this individually but often a group of people will work on the set of files that make up an application.
+<P><P>
+Several problems can occur when working with source code files. You might make a mistake and decide you need to go back to an earlier version of the program. This is hard without some way of
+keep <i>versions</i> of the code.  If two or more people in your group edit the same file at the same time chaos can result! 
+<P><P>
+These problems can be addressed by using what we call a <i>Source Code Management System</i> (SCMS) but is also called a Source Code Control System (SCCS) or version control system. 
+The video below explains the concepts of source code management systems.
+<P><P>
+Importantly, a modern SCMS allows you to keep and manage your source code on a <i>remote server</i>. 
+We will use <a href="https://bitbucket.org/">BitBucket</a> for this. 
+The modules below introduce SCMSs, then the setup of a bitbucket repository and the "SourceTree"
+application for managing the repository.
+<P><P>
+Then we pull this together and introduce HTML foundations, as we describe how to create a simple web page and deposit its source code in the repository.
+We will build on this during the semester.
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.20.scms_intro&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPSCMS"><img id="IMGSCMS"  onclick="javascript: expandCollapse('SCMS');" title="expand/collapse">&nbsp;&nbsp;Introduction to Source Code Management Systems (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"SCMS"); elt.src = cell_long; $("#TIPSCMS img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="SCMS" style="display: none;">
+<style>
+.lobj {
+	float: left;
+	width: 50%;
+}
+</style>
+<span class="lobj">
+<iframe width="640" height="390" src="//www.youtube.com/embed/hx_rEHXvdOg" frameborder="0" allowfullscreen></iframe>
+
+</span>
+<span class="lobj">
+Learning objectives in this video (with start time in the video):<br/>
+<pre>
+00.00: Explain why a SCMS is useful.
+03:20: Explain the most basic facilities of a SCMS, 
+	in terms of multiple versions and revert.
+05:00: Give examples of major SCMS. 
+07.05: Explain the meaning and use of the basic 
+	check in and check out operations. 
+	Explain why document on check ins is important. 
+	Explain the difference between centralised and a distributed SCMS. 
+	Explain the clone and push operations in a distributed SCMS. 
+10:30: Explain the characteristics of hg. 
+	Is hg centralised? 
+	Can you run it solely on your own machine?
+	Explain the hg changeset. 
+12.50: Explain the meaning and syntax of the basic hg commands: 
+	help; init; add; status; commit.
+15:00: Explain the purpose of the hg command line commands: diff and revert.
+</pre>
+</span>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.30_bitb&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPsourcetree"><img id="IMGsourcetree"  onclick="javascript: expandCollapse('sourcetree');" title="expand/collapse">&nbsp;&nbsp;Setting up your environment: BitBucket and SourceTree (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"sourcetree"); elt.src = cell_long; $("#TIPsourcetree img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="sourcetree" style="display: none;">
+<p class=spaced>
+This module guides you through setting your environment for source code management in the course. Please do this at home before coming to the lab.
+If you have problems the tutor will be able to help.
+</p>
+<p class=spaced>
+You will need to use several windows during the set up process: one browser window for the instructions you are reading now, one browser window for 
+bitbucket, one window for sourcetree and one for a text editor or commands. Make all windows wide enough to see instructions 
+and get the full view so they match the instructions below.
+</p>
+The first step in the process of setting up your environment is to create a BitBucket account. This is very easy: just go to 
+https://bitbucket.org and "Sign up for free". 
+<div style="font-weight:bold; font-size:125%;">NOTE: please use your Unikey email address (eg WXYZ4321@uni.sydney.edu.au) when signing up for a free account.</div>
+This will cause your account to be converted to an unlimited account that can be used for groups larger than 5.
+</p>
+<p class=spaced>
+Step two is to install the Atlassian "SourceTree" application. Go to <a href="sourcetreeapp.com">http://sourcetreeapp.com/</a> 
+and download and install the right version for your operating system (windows or Mac).
+If you use SourceTree on the SIT lab computers you will find that it is already installed. However, you need to go to the "Tools" menu, select "Mercurial" and then click the "enable" button.
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;"><b><img src="Images/glyphicons_152_check.png">Create a bitbucket hg repository on the local machine and at the central repository</b><P><P>After you have created your account and installed SourceTree, login in to bitbucket and press the "create" button in the top menu bar to create a new repository.
+<P><P>The following screen will appear:
+<P><P>Fill in the name and description and be careful to tick the boxes as shown. Then click on the "Create repository" button at the bottom.</div></td>
+<td><img src="Images/05_create_BB_repo.png"  width=90% ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;"><P>After creating the repository the next step is to set it up. <P>
+We're going to use the "SourceTree" repository client app running on your local machine so just click the "Clone in SourceTree" button.<P></div></td>
+<td><img src="Images/06.0_repo_setup.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">The SourceTree program should start and give you a window like this:<P>
+<P><P>Click on "Clone" and SourceTree will make a copy of your repository on your local machine. 
+SourceTree allows you specify the destination directory or path to store the repository files locally.  </div></td>
+<td><img src="Images/06.1_clone_to_sourcetree.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">Now it's time to create a file in your new repository. Use any text editor you prefer, create a file called "README" in the directory you made for the respository.
+The convention is that a README file contains information about the repository.
+<P> The file will appear in a SourceTree window like this:
+<P><P>Notice that the file README.txt has a question mark next the name.
+This indicates that the file is in the repository directory but not yet incorporated into the repository database.<P> </div></td>
+<td><img src="Images/07_create_file.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">To add the file to the repository database just tick the box next to the file and click on the <img src="Images/ST_add_button.png"> button on the top menu bar.<P> </div></td>
+<td><img src="Images/08_add_file.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">
+Now you have some pending changes, namely that you have a file to add to the repository.
+To commit them:
+<ol>
+<li>Click the SourceTree commit button on the top row</li>
+<li>Complete the requested information about your name and email</li>
+<li>Fill in the comment box and click the commit button below it.</li>
+</ol>
+You should always add a comment that explains briefly what changes you've made to your repository. Later you can quickly find details of changes made.<P></div></td>
+<td><img src="Images/09_commit.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">The changes have now been recorded in your <i>local</i> repository. 
+If you wanted you could stop at this point and just work with your text and the local repository. 
+But that means your text is locked up on the local machine. If you work with a group they can't get access.
+If the repository is on the University system, you don't have access on your laptop.
+<P><P>The solution to these problems is to use the BitBucket repository to keep a copy of all your changes.
+You do this by "push"ing the set of changes to BitBucket. 
+<P><P>Notice there is a button labeled "push" with a red 1 overlaid?  <img src="Images/ST_push_button.png"> 
+Clicking that button will "push" the changes to the BitBucket server. The 1 means there is one change set that hasn't been sent to the server.
+<P>A screen like that at the right should appear at this point.  
+Click on OK to complete the push.
+</div></td>
+<td><img src="Images/10_push_changes_to_repo.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">Let's leave the SourceTree program for a moment and see what has happend on the BitBucket server.
+Go to the <a href="https://bitbucket.org/">bitbucket</a> site and login. Then click on the "Source" button on the left.
+You should see the README file that was created earlier, saved in the repository and then pushed to the server.
+<P><P> The next thing to demonstrate is how to change a file and save the change in the repository.</div></td>
+<td><img src="Images/11_BB_view.png" width="100%"></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">Using your text editor, change the README file in some way. Iv'e just added an extra line.
+Make sure you save the changed file.</div></td>
+<td><img src="Images/12_change_the_readme.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">The SourceTree program has noticed that a file has changed and will display what the changes are.
+<P><P>The next step is to commit the change by pressing the "commit" button on the top left. <img src="Images/ST_commit_button.png"></div></td>
+<td><img src="Images/13_sourcetree_notices_change.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">SourceTree will now give you the opportunity to add a detailed description of the change. Finally, press the "commit" button on the lower right to commit the change.</div></td>
+<td><img src="Images/14_add_commit_comment.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">Now we can push the change to bitbucket as before.</div></td>
+<td><img src="Images/15_push.png" ></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">Go back to the bitbucket web page and click "Overview" on the left. 
+This will show the README file and list the commit's that have been made to the repository (on the right).</div></td>
+<td><img src="Images/16_BB_Overview.png" width="100%"></td></tr></table>
+<table cellpadding=20><tr><td width=40%><div style="background-color:#ffffcc;">If you click on one of the commits, for example the most recent, you will see the details of what was changed.</div></td>
+<td><img src="Images/17_last_commit.png" width="100%"></td></tr></table>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.40.hg_demo&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPmercurial"><img id="IMGmercurial"  onclick="javascript: expandCollapse('mercurial');" title="expand/collapse">&nbsp;&nbsp;Introduction to Mercurial: a demonstration (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"mercurial"); elt.src = cell_long; $("#TIPmercurial img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="mercurial" style="display: none;">
+The following video is a demonstration of using the "hg" command to create a mercurial repository on your local machine and to add and modify your source code.
+<p>
+The video consists of a "screencast" of the command line on a Unix based system. We suggest you use the button on the lower right to make the video full screen in order to improve readbility.
+<P>
+<iframe width="640" height="390" src="//www.youtube.com/embed/DLKFeeXBZxU" frameborder="0" allowfullscreen></iframe>
+
+<P>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.50_webpage&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPwebpage"><img id="IMGwebpage"  onclick="javascript: expandCollapse('webpage');" title="expand/collapse">&nbsp;&nbsp;Making a web page (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"webpage"); elt.src = cell_long; $("#TIPwebpage img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="webpage" style="display: none;">
+<p class=spaced>
+Web pages are described using several different text based language technologies. 
+The first of these is HTML or HyperText Markup Language.
+A <i>markup language</i> consists of a set of language elements or <i>tags</i> that are used
+to designate page content. Markup languages and tags come in many forms but the language we will use for 
+web pages uses text tags between angle brackets, &lt; and &gt;.
+</p>
+<p class=spaced>
+Both the content of your page and the markup tags are entered as plain text using a text editor (note that you can't use
+a word processor like MS Word). There are a large number of text editors available for any system but any one will do.
+If you are using MS Windows then even the notepad program can be used. Mac OSX comes with a more sophisticated text editor
+called "TextEdit". If you like command line text editors then vi, vim, emacs and others are available for unix based systems
+such as Linux or Mac OSX. Also, there are many free or low cost text editors available with all sorts of fancy features.
+For example, Sublime Text 2 is a very powerful text editor available for windows, Mac or Linux.
+</p>
+<p class=spaced>
+You make your web pages on your local machine using a text editor and then display them using your web browser, no web server or
+web address required.
+</p>
+<HR>
+Let's make a simple web page with just a heading and a line text. In my text editor I enter the following lines:
+</p>
+<p>
+<img src="Images/html-1.png">
+</p>
+<p class=spaced>
+Then I name the file "firstpage.html" and save it into the directory I set up as Mercurial repository. I could actually save it anywhere in my
+file system but we are going to make a lot of text files in the lab sessions and we want to keep them in a repository.
+</p>
+<p>
+Now open your web browser and using the "Open File..." menu select the file you just saved. You should see something like the following:
+</p>
+ 
+<img src="Images/browser-1.png">
+<P>
+<p class=spaced>
+The next thing to do, before we analyse the HTML code, is to save our file into the repository. 
+Using SourceTree or the command line, "add" your "firstpage.html" file to the repository, then "commit" the change, and finally "push" the change to bitbucket. 
+This will be our general workflow in future: change or create some files, commit the changes, push the change set to bitbucket. 
+Then at any time we have a complete history of changes stored in the cloud.
+<p class=spaced>
+Now let's analyse the HTML code to see what it means.
+</p>
+<p class=spaced>
+The <i>tags</i> are the words between angle brackets. General the tags themselves act as brackets using a matching closing tag.
+For example <span style="background-color:#ffffcc;">&lt;html&gt;</span>
+is matched by <span style="background-color:#ffffcc;">&lt;/html&gt;</span> at the end of the document. 
+Similarly for the "head", "body", "h1" and "p" tags. They each have a matching closing tag.
+</p>
+<p class=spaced>
+The overall structure of an html document is:
+<div>
+<pre style="width:250px;">
+html
+&nbsp; &nbsp;head
+&nbsp; &nbsp;/head
+&nbsp; &nbsp;body
+&nbsp; &nbsp;/body
+/html
+</pre>
+The first line:
+<span style="background-color:#ffffcc;"> !&lt;DOCTYPE html&gt;  </span>
+indicates the type of document. In this case, it tells the browser that this is an html document.
+<p class=spaced>
+In general the tags tell the browser the type of the content that they delimit. The line:
+<pre style="width:250px;">
+&lt;h1&gt;INFO3315 Web Page&lt;/h1&gt;
+</pre>
+says that the text "INFO3315 Web Page" is a level 1 heading. The browser then has some rules for displaying level 1 headings.
+We can change these rules using the CSS style language that we'll cover in the next lab.
+<p class=spaced>
+Similarly, the line:
+<pre style="width:500px;">
+&lt;p&gt;This is my first web page for INFO3315.&lt;/p&gt;
+</pre>
+says that the text "This is my first web page for INFO3315." is a paragraph and the browser knows how to render (display) paragraphs.
+</p>
+<p>
+The reason HTML is the "HyperText" markup language is that page can be linked together. 
+(Interesting Fact: The term <a href="http://en.wikipedia.org/wiki/Hypertext"><i>hypertext</i></a> was coined by <a href="http://en.wikipedia.org/wiki/Ted_Nelson">Ted Nelson</a>
+in 1963. More than 25 years before the web protocols were invented by <a href="http://en.wikipedia.org/wiki/Tim_Berners-Lee">Time Berners-Lee</a> in 1989.)
+We can link pages use the "a" tag with a parameter that specifies the web address or <i>URL</i> of the destination page. 
+For example:
+<pre style="width:100%">
+The &lt;a href="http://www.w3c.org"&gt;World Wide Web Consortium&lt;/a&gt; is responsible for web standards.
+</pre>
+This is rendered by the browser as:
+<pre style="width:100%">
+The <a href="http://www.w3c.org">World Wide Web Consortium</a> is responsible for web standards.
+</pre>
+<hr>
+<p>
+The HTML markup language has a large number tags defined. Rather go through a long list here, there are many online resources including
+tutorials and reference material. 
+</p><p style="background-color:beige;">
+For this course there is  a set of tutorials, examples and reference at <a href="http://www.w3schools.com/">w3schools.com</a>.
+We suggest you view and complete the <a href="http://www.w3schools.com/html/default.asp">HTML Tutorial</a>.<br/>
+Also, there is an excellent tutorial on HTML, CSS and Javascript at <a href="https://dash.generalassemb.ly/">Dash</a>.
+</p>
+
+
+</div>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.60_lab&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPlab3_activity"><img id="IMGlab3_activity"  onclick="javascript: expandCollapse('lab3_activity');" title="expand/collapse">&nbsp;&nbsp;Selecting the problem, target users and getting started on Bitbucket (Lab) </div>
+        <script> var elt = document.getElementById("IMG"+"lab3_activity"); elt.src = cell_long; $("#TIPlab3_activity img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="lab3_activity" style="display: none;">
+<p>
+Activity 1:
+Group shares and discusses the homework topics explored individually and selects one. 
+Your tutor will review and discuss this choice with the team.
+<p/>
+
+<p>
+Activity 2:
+Discuss potential target user groups and select one.
+Your tutor will review and discuss this choice with the team.
+<p/>
+<p>
+Activity 3:
+Group activity to establish the problem the group will address.
+The tutor will review this.
+<p/>
+<p>
+Activity 4:
+By the end of the lab, 
+one person should create a new BitBucket repository for info3315
+and invite the rest of the team.
+The decisions from these three activities should be 
+recorded on that wiki.
+<p/>
+<p>
+
+<p/>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/INFO3315.cgi?Context=Admin/Edit&amp;_Context=Lab3/2.90_checkpoints&amp;Return=Lab3" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPcheckpoints2"><img id="IMGcheckpoints2"  onclick="javascript: expandCollapse('checkpoints2');" title="expand/collapse">&nbsp;&nbsp;Checkpoints  </div>
+        <script> var elt = document.getElementById("IMG"+"checkpoints2"); elt.src = cell_long; $("#TIPcheckpoints2 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="checkpoints2" style="display: none;">
+At the end of this lab session you should have completed:
+<ul>
+<li> creating a personal bitbucket account using your unikey email address </li>
+<li> setting up your repository for your INFO3315 work: locally using SourceTree and also on bitbucket</li>
+	<ul>
+	<li>create the repository </li>
+	<li>create a README text file, add to repo and push to bitbucket</li>
+	</ul>
+<li> creating a web page on your local machine</li>
+<li> add the web page to your local repo and push to bitbucket</li>
+</ul>
+<P>
+<span style="background-color:#ffffcc;">Demonstrate each of these to your tutor.</span>
+<P>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 3 END -->
+
+</tr><tr>
+
+<!-- Bottom START -->
+<td width="90%" class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;">
+<tr>
+    <td width="91%"></td>
+    <td valign=bottom>
+	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Wed Aug  5 22:29:07 2015</span></td>
+</tr></table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;"><tr><td width="99%">
+</td><td valign=middle>
+  <span style="font-family: helvetica,arial,sans-serif;font-size: 60%;"> Poweredby&nbsp;</span> 
+</td><td valign=bottom>
+  <a href="http://www.it.usyd.edu.au/~bob/web.cgi?Cellerator">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAIAAAD8q9/YAAAA40lEQVR4nOWXMQ7DIAxFPxVnxXOW
+DDlAhizMPi0dEIjapE1ISgbehJFl/S/bQTHOOYyEBcDMT8voBBHZdDQ31OOw+eWGOv9hnlYAr6dl
+9GY4w7ZyxwEohjyG+YbDx/yLMBHnB0AcchGWOflG5/xMaEAZzgZKJ00bLmRl53uHzS/5XE3QRRqo
+dTgi2ojTtqv90R2+UrOB/R3OkwyATEOTN7+UyrRKkXCw5lkZAmWYDDhUFrX0/z1MzNMqehiH9qCy
+mKyn91QRjXHOMfMg7zARDfcsDWc4faVrS9jAle3qgxntb+kN/vGFkIjMAnUAAAAASUVORK5CYII=
+" title="Cellerator Home" alt="[Cellerator]" width=80 height=15 border=0>
+  </a>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Bottom END -->
+
+</tr></table>
+
+<!-- Completed in 0.09 cpu / 0.06 wall seconds. -->
+</body></html>
