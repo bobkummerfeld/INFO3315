@@ -1,0 +1,705 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>INFO3315 Lab4</title>
+<base href="http://bobkummerfeld.github.io/INFO3315/index.html">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<!-- 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+-->
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+.list-group{
+	width: 100px;
+}
+.bs-example{
+   	margin: 20px;
+}
+</style>
+<style type="text/css">
+
+img {max-width:100%}
+
+
+
+
+.tooltip {
+    display:none;
+    background:transparent url(/media/img/tooltip/black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#eee;
+}
+
+body {
+	margin: 0;
+/*	background-color: #e6e6e6;	*/
+	background-color: #ffffff;
+	border: 0;
+	padding: 2px;
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.frame {
+ }
+.framedata { }
+.column { }
+.columndata { }
+.cell { padding: 10px; }
+
+.loginbanner {
+	background-color: #fed;
+	border:	1px solid #dcb;
+	padding: 0px 5px 2px 5px;
+	font-size: 80%; font-weight: bold;
+	color: #39628b;
+}
+.cellbanner {
+	background-color: #fff;
+	/*border:	1px solid #fff; */
+/*
+	border-right:  1px solid #b0b0b0;
+	border-top: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 0px 5px 2px 5px;
+	font-size: 120%; font-weight: bold;
+	color: #39628b;
+}
+.cellbody {
+	background-color: #fff;
+/*
+	border-right:  1px solid #b0b0b0;
+	border-bottom: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 10px;
+}
+
+/* order is important */
+/*
+a:link { color: darkblue; }
+*/
+a:visited { color: darkblue; }
+a:hover { color: blue; }
+a:active { color: blue; }
+
+a.non { text-decoration: none; }
+a.smallnon { font-size: 80%; text-decoration: none; }
+
+p.hang {
+	text-indent: -1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.spaced { margin-bottom: 20px; }
+p { margin-bottom: 20px; }
+div.boxed {
+	text-indent: 1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 20;
+	border: 5px solid gray;
+	width:"50%";
+}
+
+
+pre.darkgreen { color: darkgreen; }
+pre.darkblue { color: darkblue; }
+
+span.logname {
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.logtext {
+	font-size: 80%;
+}
+
+span.sestext {
+	font-size: 80%;
+	color: darkblue;
+}
+
+button.logout {
+	padding: 0;
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+	float: right;
+}
+
+button.darkblue {
+	padding: 0;
+	font-weight: bold;
+	color: darkblue;
+}
+
+table.role { margin: 2px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+td.role { text-align: center; font-size: 100%; font-weight: bold; color: #fff; }
+td img.decor { display: block; }
+
+a.external { text-decoration: none; }
+a.external:link { color: #fff }
+a.external:visited { color: #fff }
+a.external:hover { color: #ffc }
+a.external:active { color: #ffc }
+
+span.edit { float: right; }
+a.edit { text-decoration: none; color: #dcb; }
+a.edit:hover { color: blue; }
+a.edit:active { color: blue; }
+</style>
+<script type="text/javascript">//<![CDATA[
+
+var cell_long = "Images/glyphicons_368_collapse.png"
+var cell_short = "Images/glyphicons_369_collapse_top.png"
+
+function expandCollapse(eltid)
+{
+	var element = document.getElementById(eltid);
+	var imgelement = document.getElementById("IMG"+eltid);
+	if (element.style.display == "none")
+	{
+		element.style.display = "block";
+		imgelement.src = cell_short;
+	}
+	else
+	{
+		element.style.display = "none";
+		imgelement.src = cell_long;
+	}
+	
+}
+
+
+$(function() {
+$( document ).tooltip();
+});
+//]]></script>
+
+</head>
+
+<body>
+
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="frame"><tr>
+
+<!-- Top START -->
+<td class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td width="100%" style="position:fixed;  top:0px;left:0px;  z-index:10" id="bannercell" class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="role" style="background:#12416C;">
+  <tr> 
+    <td colspan="3">
+      <img src="Images/pix.gif" width="1" height="1" alt="" hspace="275" vspace="0" class="decor">
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/university_sydney_logo.gif" width="200" height="80" alt="link to University of Sydney Web
+	Page"  border="0" class="decor">
+      </a>
+    </td>
+	<!--
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/top_banner_in02.gif" width="227" height="52" alt="" title="" border="0" class="decor">
+      </a>
+    </td>
+	-->
+    <td width="30%" align="center" class="role" style="padding-right:5px">
+    INFO3315 Human Computer Interaction<br />
+      <a class="external" href="http://www.it.usyd.edu.au">
+        School&nbsp;of&nbsp;Information&nbsp;Technologies
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="height:100px">X</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Top END -->
+
+</tr><tr>
+
+<!-- Column 1 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td style="position:fixed;  width:120px;height:50px;top:80px;left:7px;  z-index:0" id="menucell" class="columndata">
+
+<!-- Cell START -->
+<script>
+var sessionname = "INFO3315";
+function gothere(where)
+{
+	var i = location.href.lastIndexOf('/');
+	var leading = location.href.slice(0,i);
+	if (location.pathname.slice(-4) == '.cgi')
+	{
+		var j = location.href.lastIndexOf('?');
+		var scriptname = location.href.slice(i+1,j+1);
+	        location.assign(leading+"/"+scriptname+where);
+	}
+	else
+	{
+		location.assign(leading+"/"+sessionname+"_"+where+".html");
+	}
+}
+</script>
+
+<div class="bs-example">
+    <div class="list-group" style="width:110px;">
+
+
+		<a href="javascript: gothere('Home');" class="list-group-item ">
+			Home
+		</a>
+		
+
+		<a href="javascript: gothere('Assess');" class="list-group-item ">
+			Assess
+		</a>
+		
+
+		<a href="javascript: gothere('Resources');" class="list-group-item ">
+			Resources
+		</a>
+		
+
+		<a href="javascript: gothere('Labs');" class="list-group-item ">
+			Labs
+		</a>
+		
+</div>
+</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 1 END -->
+
+
+<!-- Column 2 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="min-width: 140px"> &nbsp; </div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 2 END -->
+
+
+<!-- Column 3 START -->
+<td width="90%" class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab4/2.00_lab3_intro&amp;Return=Lab4" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+</td></tr><tr><td class="cellbody">
+<h1>
+Lab Week 4
+</h1>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab4/2.05_homework&amp;Return=Lab4" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+<div>Homework</div>
+</td></tr><tr><td class="cellbody">
+<p>
+<ol>
+<li>
+Complete all the technical activities marked as homework.
+</li><li>
+Do the contextual analysis activity described in the Week 3 lecture. 
+</li><li>
+Bring at least 5 sketches for your design concepts, building from the Lecture 3 ideation activity. 
+</li><li>
+Bring at least 1 storyboard, building from the Lecture 3 ideation activity. 
+</li>
+</ol>
+<p/>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab4/2.20_css&amp;Return=Lab4" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPcss"><img id="IMGcss"  onclick="javascript: expandCollapse('css');" title="expand/collapse">&nbsp;&nbsp;Cascading Style Sheets (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"css"); elt.src = cell_long; $("#TIPcss img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="css" style="display: none;">
+<p>
+This is a quick overview of CSSS and its interaction with HTML,
+as a taster for the tutorial linked at the bottom of this cell.
+</p>
+<p>
+Last week we saw how the HTML markup language can be used to describe the content of a web page. 
+The original aim of the HTML design was simply to describe the content and leave the styling and layout
+to some other part of the system (eg the browser). Unfortunately, HTML was "enhanced" with many tags that 
+specified style and layout. For example, the "&lt;b&gt;" tag was introduced to specify that the text was to be
+rendered in <span style="font-weight: bold;">bold</span>. More recently, the HTML language has been revised and another
+language (CSS) introduced to specify the style and layout of elements on the page.
+</p>
+<p>
+The CSS language can be written inside your HTML file or it can be written in a separate file and loaded when your web page is loaded.<br/>
+Small snippets of CSS can even be included with individual tags in the HTML.<br/>
+For this tutorial, we suggest that you put all the CSS statements at the beginning
+of your html body section between 
+&lt;style&gt; 
+and
+&lt;/style&gt; 
+tags.
+</p>
+<p>
+CSS consists of a set of rules that say how HTML elements whould rendered (arranged on the page and styled). 
+<br/>
+A CSS rule consists of a 
+<i>selector</i> and a <i>declaration</i> or <i>block</i> of declarations. 
+<br/>
+The selector is used to select an individual HTML element or set of
+HTML elements in your page. <br/>
+Here is an example of changing the style of paragraphs in the document.
+<br/>
+You add the CSS statement:
+</p>
+<pre style="display:inline; background-color:#E0F5FF;">
+p { font-size:120%; }
+</pre> <br/>
+Try adding this CSS and the style tags to the homepage you already made.
+<br/>
+<br/>
+<p style="font-size:120%;">This would make the paragraph text large, as in this line.  </p>
+<p>
+In this case the selector is the "p" tag (paragraph) and the block contains one declaration setting the font size for all text enclosed
+in the p tag to 120% of the original size.
+</p>
+<p>
+We can add more declarations inside the block:
+<pre style="display:inline; background-color:#E0F5FF;">
+p { font-size:120%; color:red;}
+</pre> <br/>
+Try altering your homepage, to have this additional declaration.
+<br/>
+It should make the paragraph text look like this:
+<br/>
+<p style="font-size:120%; color:red;"> This now makes the paragraph text large and red.  </p>
+<p>
+This will define the appearance of all paragraphs.<br/>
+However, you may not want <b>all</b> paragraphs 
+in this new style.<br/>
+CSS has several mechanisms for selecting individual paragraphs or classes of paragraph.
+</p>
+<p>
+We now show how to do this.<br/>
+HTML tags can have <i>attributes</i>. <br/>
+These are name/value pairs that are included in the angle brackets. <br/>
+<br/>
+For example, suppose we have set up the style above 
+but we now want to be able to have some paragraphs that are
+even bigger and have the text in blue.<br/>
+We can give the p selector the id "biggerblue", as in this line of HTML.<br/>
+We show it with a grey background to distinguish it from the CSS examples above:
+<pre style="display:inline;">
+&lt;p id=biggerblue&gt;This paragraph will be bigger and blue.&lt;/p&gt;
+</pre></br>
+if we provide the following CSS statement (in the style section)
+defining the font and colour of this &lt;p&gt; tag:
+<p>
+<pre style="display:inline; background-color:#E0F5FF;">
+#biggerblue { font-size:150%; color:blue;}
+</pre> </p>
+and then the paragraph will appear bigger and blue.<br/>
+Try it!<br/>
+Add the extra CSS line and the HTML line as above, each in the right part of your file.
+You will like it! <br/>
+Notice the "#" character. <br/>
+This indicates that we are specifying an id rather than a tag name.
+<br/>
+It is used to specify an individual tag. 
+<br/>
+<br/>
+You can also have <i>classes</i> of tag:<br/>
+<br/>
+<br/>
+<pre style="display:inline;">
+&lt;p class=smallgreen&gt;This paragraph will be small and green.&lt;/p&gt;
+</pre></p>
+where we have the selector: 
+<p>
+<pre style="display:inline; background-color:#E0F5FF;">
+.smallgreen { font-size:60%; color:green;}
+</pre> 
+</p>
+("." character leading the class name)</br>
+All tags with that class will then have the style applied.
+<p>
+<p>
+If you have multiple tags, ids or classes with the same declarations you can combine them. For example:
+</p><p>
+<pre style="display:inline; background-color:#E0F5FF;">
+p table { font-size:120%; color:red;}
+</pre> </p>
+<p>
+This will apply the large red font to both paragraphs and tables.
+</p>
+<p>
+The basic idea of CSS is that you can select an entity (eg text, table, paragraph etc) and say how it should look.
+</p>
+<p>
+The other principle of HTML/CSS is that all the entities 
+that are to be displayed are considered to be "boxes".<br/>
+Every box has standard attributes.
+Some basic ones are margins, borders, padding, background and content that can be modified. <br/>
+For example, borders can be transparent or
+solid or dashed or have many other special effects applied.</p>
+<p>
+A paragraph in a dotted border box is styled:
+</p>
+<p>
+<pre style="display:inline; background-color:#E0F5FF;">
+p { border-style:dotted; }
+</pre> </p>
+and appears
+<p style="border-style:dotted; display:inline">like this</p>
+<hr>
+<p>
+To recap, the main principles for HTML/CSS are:
+<ul>
+<li>HTML and CSS are separate languages: HTML specifies the content, CSS specifies the style of the content</li>
+<li>HTML and CSS can be in the same file, different files or in-line</li>
+<li>CSS rules consist of <i>selectors</i> to select one or more tags, and <i>declarations</i> (or rules/properties) to say how they should be styled</li>
+<li>Entities on the page are built from boxes with changeable characteristics.</li>
+</ul>
+</p>
+<hr>
+<p style="background-color:beige;">
+For a detailed study of CSS attributes and how to use them, please refer to the online resources at <a href="http://www.w3schools.com/">W3Schools</a>.
+<br/>
+You should now work steadily through the excellent
+<a href="http://www.w3schools.com/css/default.asp">W3Schools tutorial</a>.<br/>
+Also, skim the attributes listed on the 
+<a href="http://www.w3schools.com/cssref/default.asp">reference material</a>.<br/>
+Get a sense of what they offer.<br/>
+The <a href="https://dash.generalassemb.ly/">Dash</a> web site also has an excellent tutorial on CSS.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab4/2.30_css_exercise&amp;Return=Lab4" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPcss_ex"><img id="IMGcss_ex"  onclick="javascript: expandCollapse('css_ex');" title="expand/collapse">&nbsp;&nbsp;Cascading Style Sheet Exercise (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"css_ex"); elt.src = cell_long; $("#TIPcss_ex img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="css_ex" style="display: none;">
+<p>
+From your reading of the W3Schools tutorial you have just done,
+demonstrate your skill at using CSS by adding a style sheet 
+to a fresh copy of the web page you made last week.<br/>
+This time, add a background image, 
+change the font size and colour, centre all elements on the page.<br>
+Put the CSS into a separate file and use the correct HTML to 
+reference it in the head section of your page file.
+</p>
+<p>
+Don't forget to add the CSS file to your repository, check it in and push the changes to bitbucket.
+</p>
+<p>
+<span style="background-color:#ffffcc;">Demonstrate your work to your tutor.</span>
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab4/2.60_HCI&amp;Return=Lab4" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPUX_week4"><img id="IMGUX_week4"  onclick="javascript: expandCollapse('UX_week4');" title="expand/collapse">&nbsp;&nbsp;System Concept Formulation (Lab) </div>
+        <script> var elt = document.getElementById("IMG"+"UX_week4"); elt.src = cell_long; $("#TIPUX_week4 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="UX_week4" style="display: none;">
+<p>
+<ul>
+<li>
+Work on your group/s System Concept Formulation - as in Week 2 lecture (Towards Assignment 1)
+</li>
+<li>
+Add this to your group Bitbucket wiki.
+</li>
+<li>
+Share the homework ideation (sketches plus storyboard) for the conceptual design.
+<br/>
+Identify the most promising design ideas to refine and expand upon.
+<br/>
+Criteria for selection: useful, interesting, [ignore feasibility at this stage].
+</li>
+</ul>
+</p>
+
+<P>
+The tutor will review these, sharing some aspects with the class, and identifying exemplars to share in the next lecture.
+<P>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab4/2.90_lab3_checkpoints&amp;Return=Lab4" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPcheckpoints2"><img id="IMGcheckpoints2"  onclick="javascript: expandCollapse('checkpoints2');" title="expand/collapse">&nbsp;&nbsp;Checkpoints  </div>
+        <script> var elt = document.getElementById("IMG"+"checkpoints2"); elt.src = cell_long; $("#TIPcheckpoints2 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="checkpoints2" style="display: none;">
+<p>
+At the end of this lab session you should have an appreciation of:
+<ul>
+<li>the main principles of HTML/CSS:
+	<ul>
+	<li>HTML and CSS are separate languages: HTML specifies the content, CSS specifies the style of the content</li>
+	<li>HTML and CSS can be in the same file, different files or in-line</li>
+	<li>CSS rules consist of <i>selectors</i> to select one or more tags, and <i>declarations</i> to say how they should be styled</li>
+	<li>Entities on the page are built from boxes with changeable characteristics.</li>
+	</ul>
+</li>
+<li>UX elements
+        <ul>
+        <li>System Concept Fomulation</li>
+        <li>Contextual Analysis sharing homework -- key lessons, to inform your conceptual design</li>
+        <li>Selection of the most exciting sketches from your group (so far)</li>
+        </ul>
+	
+</li>
+</ul>
+</p>
+
+<P>
+<span style="background-color:#ffffcc;">Your tutor needs to see each of these.</span>
+<P>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 3 END -->
+
+</tr><tr>
+
+<!-- Bottom START -->
+<td width="90%" class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;">
+<tr>
+    <td width="91%"></td>
+    <td valign=bottom>
+	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Wed Aug 12 23:34:06 2015</span></td>
+</tr></table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;"><tr><td width="99%">
+</td><td valign=middle>
+  <span style="font-family: helvetica,arial,sans-serif;font-size: 60%;"> Poweredby&nbsp;</span> 
+</td><td valign=bottom>
+  <a href="http://www.it.usyd.edu.au/~bob/web.cgi?Cellerator">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAIAAAD8q9/YAAAA40lEQVR4nOWXMQ7DIAxFPxVnxXOW
+DDlAhizMPi0dEIjapE1ISgbehJFl/S/bQTHOOYyEBcDMT8voBBHZdDQ31OOw+eWGOv9hnlYAr6dl
+9GY4w7ZyxwEohjyG+YbDx/yLMBHnB0AcchGWOflG5/xMaEAZzgZKJ00bLmRl53uHzS/5XE3QRRqo
+dTgi2ojTtqv90R2+UrOB/R3OkwyATEOTN7+UyrRKkXCw5lkZAmWYDDhUFrX0/z1MzNMqehiH9qCy
+mKyn91QRjXHOMfMg7zARDfcsDWc4faVrS9jAle3qgxntb+kN/vGFkIjMAnUAAAAASUVORK5CYII=
+" title="Cellerator Home" alt="[Cellerator]" width=80 height=15 border=0>
+  </a>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Bottom END -->
+
+</tr></table>
+
+<!-- Completed in 0.09 cpu / 0.09 wall seconds. -->
+</body></html>
