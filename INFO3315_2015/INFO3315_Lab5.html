@@ -1,0 +1,628 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>INFO3315 Lab5</title>
+<base href="http://bobkummerfeld.github.io/INFO3315/index.html">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<!-- 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+-->
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+.list-group{
+	width: 100px;
+}
+.bs-example{
+   	margin: 20px;
+}
+</style>
+<style type="text/css">
+
+img {max-width:100%}
+
+
+
+
+.tooltip {
+    display:none;
+    background:transparent url(/media/img/tooltip/black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#eee;
+}
+
+body {
+	margin: 0;
+/*	background-color: #e6e6e6;	*/
+	background-color: #ffffff;
+	border: 0;
+	padding: 2px;
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.frame {
+ }
+.framedata { }
+.column { }
+.columndata { }
+.cell { padding: 10px; }
+
+.loginbanner {
+	background-color: #fed;
+	border:	1px solid #dcb;
+	padding: 0px 5px 2px 5px;
+	font-size: 80%; font-weight: bold;
+	color: #39628b;
+}
+.cellbanner {
+	background-color: #fff;
+	/*border:	1px solid #fff; */
+/*
+	border-right:  1px solid #b0b0b0;
+	border-top: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 0px 5px 2px 5px;
+	font-size: 120%; font-weight: bold;
+	color: #39628b;
+}
+.cellbody {
+	background-color: #fff;
+/*
+	border-right:  1px solid #b0b0b0;
+	border-bottom: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 10px;
+}
+
+/* order is important */
+/*
+a:link { color: darkblue; }
+*/
+a:visited { color: darkblue; }
+a:hover { color: blue; }
+a:active { color: blue; }
+
+a.non { text-decoration: none; }
+a.smallnon { font-size: 80%; text-decoration: none; }
+
+p.hang {
+	text-indent: -1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.spaced { margin-bottom: 20px; }
+p { margin-bottom: 20px; }
+div.boxed {
+	text-indent: 1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 20;
+	border: 5px solid gray;
+	width:"50%";
+}
+
+
+pre.darkgreen { color: darkgreen; }
+pre.darkblue { color: darkblue; }
+
+span.logname {
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.logtext {
+	font-size: 80%;
+}
+
+span.sestext {
+	font-size: 80%;
+	color: darkblue;
+}
+
+button.logout {
+	padding: 0;
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+	float: right;
+}
+
+button.darkblue {
+	padding: 0;
+	font-weight: bold;
+	color: darkblue;
+}
+
+table.role { margin: 2px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+td.role { text-align: center; font-size: 100%; font-weight: bold; color: #fff; }
+td img.decor { display: block; }
+
+a.external { text-decoration: none; }
+a.external:link { color: #fff }
+a.external:visited { color: #fff }
+a.external:hover { color: #ffc }
+a.external:active { color: #ffc }
+
+span.edit { float: right; }
+a.edit { text-decoration: none; color: #dcb; }
+a.edit:hover { color: blue; }
+a.edit:active { color: blue; }
+</style>
+<script type="text/javascript">//<![CDATA[
+
+var cell_long = "Images/glyphicons_368_collapse.png"
+var cell_short = "Images/glyphicons_369_collapse_top.png"
+
+function expandCollapse(eltid)
+{
+	var element = document.getElementById(eltid);
+	var imgelement = document.getElementById("IMG"+eltid);
+	if (element.style.display == "none")
+	{
+		element.style.display = "block";
+		imgelement.src = cell_short;
+	}
+	else
+	{
+		element.style.display = "none";
+		imgelement.src = cell_long;
+	}
+	
+}
+
+
+$(function() {
+$( document ).tooltip();
+});
+//]]></script>
+
+</head>
+
+<body>
+
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="frame"><tr>
+
+<!-- Top START -->
+<td class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td width="100%" style="position:fixed;  top:0px;left:0px;  z-index:10" id="bannercell" class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="role" style="background:#12416C;">
+  <tr> 
+    <td colspan="3">
+      <img src="Images/pix.gif" width="1" height="1" alt="" hspace="275" vspace="0" class="decor">
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/university_sydney_logo.gif" width="200" height="80" alt="link to University of Sydney Web
+	Page"  border="0" class="decor">
+      </a>
+    </td>
+	<!--
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/top_banner_in02.gif" width="227" height="52" alt="" title="" border="0" class="decor">
+      </a>
+    </td>
+	-->
+    <td width="30%" align="center" class="role" style="padding-right:5px">
+    INFO3315 Human Computer Interaction<br />
+      <a class="external" href="http://www.it.usyd.edu.au">
+        School&nbsp;of&nbsp;Information&nbsp;Technologies
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="height:100px">X</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Top END -->
+
+</tr><tr>
+
+<!-- Column 1 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td style="position:fixed;  width:120px;height:50px;top:80px;left:7px;  z-index:0" id="menucell" class="columndata">
+
+<!-- Cell START -->
+<script>
+var sessionname = "INFO3315";
+function gothere(where)
+{
+	var i = location.href.lastIndexOf('/');
+	var leading = location.href.slice(0,i);
+	if (location.pathname.slice(-4) == '.cgi')
+	{
+		var j = location.href.lastIndexOf('?');
+		var scriptname = location.href.slice(i+1,j+1);
+	        location.assign(leading+"/"+scriptname+where);
+	}
+	else
+	{
+		location.assign(leading+"/"+sessionname+"_"+where+".html");
+	}
+}
+</script>
+
+<div class="bs-example">
+    <div class="list-group" style="width:110px;">
+
+
+		<a href="javascript: gothere('Home');" class="list-group-item ">
+			Home
+		</a>
+		
+
+		<a href="javascript: gothere('Assess');" class="list-group-item ">
+			Assess
+		</a>
+		
+
+		<a href="javascript: gothere('Resources');" class="list-group-item ">
+			Resources
+		</a>
+		
+
+		<a href="javascript: gothere('Labs');" class="list-group-item ">
+			Labs
+		</a>
+		
+</div>
+</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 1 END -->
+
+
+<!-- Column 2 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="min-width: 140px"> &nbsp; </div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 2 END -->
+
+
+<!-- Column 3 START -->
+<td width="90%" class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+</td></tr><tr><td class="cellbody">
+<h1>
+Lab Week 5
+</h1>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<div>Homework</div>
+</td></tr><tr><td class="cellbody">
+All the outputs from these should be on the Bitbucket site, in the hg repository or the wiki as appropriate.
+<p>
+<ol>
+<li> Complete any outstanding technical activities from previous week's labs.  </li>
+<li> Do the recommended tutorials below for Javascript, Bootstrap, jQuery and then the integration activity.</li>
+<li> Complete any unfinished work from last week for Assignment 1. </li>
+<li> Create one key persona for Assignment 1. </li>
+<li> Define 5 abstract, with 3 concrete tasks each  - that are relevant for that persona - for Assignment 1. </li>
+</ol>
+<p/>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+Introduction to Javascript and Web Toolkits (Homework)
+</td></tr><tr><td class="cellbody">
+<p>
+The combination of HTML and CSS allows us to create web content with a range of fonts, styles, colours and layout.
+This can be enhanced even further with the addition of the third major web technology, Javascript. Javascript is a programming
+language that can be added to web pages to provide dynamic behaviour, eg an action occurs when you click on an element of the page.
+</p>
+<p>
+This week we will introduce Javascript and also the jQuery and Bootstrap toolkits that provide even more powerful services using a combination 
+of Javascript and CSS.
+</p>
+<p>
+</p>
+</p>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPjavascriptintro"><img id="IMGjavascriptintro"  onclick="javascript: expandCollapse('javascriptintro');" title="expand/collapse">&nbsp;&nbsp;Javascript (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"javascriptintro"); elt.src = cell_long; $("#TIPjavascriptintro img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="javascriptintro" style="display: none;">
+<p>
+Javascript is one of three technologies that make up the web: HTML, CSS and Javascript. It is essential for web developers to learn Javascript.
+</p>
+<p>
+Javascript is a general purpose programming language that can be embedded in html to respond to user actions (eg key presses, mouse clicks).
+It can also be used as a stand alone programming outside the browser and is gaining popularity for "server-side" applications.
+</p>
+<p>
+Please note that Javascript has nothing to do with the Java programming language apart from some common syntax elements that were inherited 
+from other languages such as C. The formal name for the version of javascript in use today is "ECMAscript" after the European standards organisation
+that has created the formal standard for the language.
+</p>
+<p>
+The javascript language has dynamic typing and supports object oriented, functional and imperative programming styles.
+See the <a href="http://en.wikipedia.org/wiki/JavaScript">wikipedia article</a> for more detail.
+</p>
+<p>
+In a similar way to CSS we can embed javascript statements in the &lt;head&gt; or &lt;body&gt; sections of the html file. 
+We can also link to an external javascript file with the "src=" attribute in a &lt;script&gt; tag.
+</p>
+<p>
+Now please complete the <a href="http://www.w3schools.com/js/">W3Schools Javascript Tutorial</a>.
+Do each part up to at least the section on Javascript Strings.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPbootstrap"><img id="IMGbootstrap"  onclick="javascript: expandCollapse('bootstrap');" title="expand/collapse">&nbsp;&nbsp;Bootstrap (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"bootstrap"); elt.src = cell_long; $("#TIPbootstrap img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="bootstrap" style="display: none;">
+<p>
+<a href="http://getbootstrap.com/">Bootstrap</a> is a very popular HTML, CSS and Javascript framework that allows you to
+easily build <i>responsive</i> web sites that adapt to different screen sizes and systems, including mobile.
+</p>
+<p>
+Bootstrap includes a number of "themes" that will give your website a look and feel that is popular on web sites at present (2014).
+Take a look at the <a href="http://getbootstrap.com/examples/theme/">examples</a> on the bootstrap web site.
+</p>
+<p>
+There are many online tutorials for Bootstrap. We suggest you do 
+<a href="http://www.sitepoint.com/twitter-bootstrap-tutorial-handling-complex-designs/">this one</a>.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPjquery"><img id="IMGjquery"  onclick="javascript: expandCollapse('jquery');" title="expand/collapse">&nbsp;&nbsp;jQuery (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"jquery"); elt.src = cell_long; $("#TIPjquery img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="jquery" style="display: none;">
+<p>
+Javascript is a powerful language for making your web pages dynamic and responsive but there are many features that you may want to add to your
+web page that required a lot of javascript code. Also, these features a often generally useful so it makes sense to use a pre-written library
+of javascript functions that provide the feature.
+</p>
+<p>
+There are many javascript libraries available, but the most popular is jQuery, used by the majority of web sites. You can read the background and
+features of jQuery <a href="http://en.wikipedia.org/wiki/JQuery">in the wikipedia article</a>.
+</p>
+<p>
+Please do the <a href="http://www.w3schools.com/jQuery/default.asp">W3schools jQuery tutorial</a>.
+Do each part up to the jQuery Animate section.
+</p>
+<p>
+There are a number of ways of including the jQuery library in your web page. We recommend using the version hosted by google by placing the
+following code in the &lt;head&gt; section of your html:
+<pre style="display:inline;">
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"&gt;&lt;/script&gt;
+</pre>
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPwrapup"><img id="IMGwrapup"  onclick="javascript: expandCollapse('wrapup');" title="expand/collapse">&nbsp;&nbsp;Bringing it all together (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"wrapup"); elt.src = cell_long; $("#TIPwrapup img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="wrapup" style="display: none;">
+<p>
+Now that you have some knowledge of the main tools for making a web site (HTML, CSS, Javascript) and also have
+a taste of what is possible with jQuery and Bootstrap, it's now time to bring it all together and apply these to
+your web page.
+</p>
+<p>
+<ul>
+<li>
+Convert your web home page made last week to use the Bootstrap 
+<a href="http://getbootstrap.com/examples/jumbotron/">jumbotron template</a>.
+<br/>(go to the page and save the source as your starting point)
+</li>
+<li>
+Add a background image to the jumbotron panel.
+</li>
+<li>
+Remove the "email","password", "sign in" on the top bar.
+Change the layout to include only two "Heading" columns. 
+</li>
+<li>
+Make the "View details" take you to pages with further information.
+</li>
+</ul>
+
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPUX5"><img id="IMGUX5"  onclick="javascript: expandCollapse('UX5');" title="expand/collapse">&nbsp;&nbsp;UX - Assignment 1 (Lab) </div>
+        <script> var elt = document.getElementById("IMG"+"UX5"); elt.src = cell_long; $("#TIPUX5 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="UX5" style="display: none;">
+The first activity involves sharing the UX homework
+and then getting practice in doing a Heuristic Evaluation.
+<ul>
+<li>
+Share the personas and concrete tasks you created for homework with your group.
+Discuss them and create the definitive version your group will use (and put this on BB).
+</li>
+<li>
+Set up for practicing Heuristic Evaluation on an existing base resource relevant to your topic:<br/>
+Select one set of the base resources for your group's topic;<br/>
+Bring up the site on one of the lab machines;<br/>
+Use another machine to display the heuristics.
+</li>
+<li>
+Conduct a Heuristic Evaluation, based on three concrete tasks, each for different abstract tasks that are relevant to this online resource (as well as your system).<br/>
+One student should play the role of the member of the system development team taking the expert through the interface as needed.<br/>
+One students should play the development team role of recording comments by the "experts".<br/>
+The rest of the team will be the "experts". 
+</li>
+</ul>
+
+<p/>
+The rest of this lab is reserved for your group to work together on Assignment 1,
+with feedback from your tutor.
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPcheckpoints2"><img id="IMGcheckpoints2"  onclick="javascript: expandCollapse('checkpoints2');" title="expand/collapse">&nbsp;&nbsp;Checkpoints  </div>
+        <script> var elt = document.getElementById("IMG"+"checkpoints2"); elt.src = cell_long; $("#TIPcheckpoints2 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="checkpoints2" style="display: none;">
+At the end of this lab session you should have completed:
+<ul>
+<li>the homework</li>
+<li>the "Bringing it all together" exercise.
+<span style="background-color:#ffffcc;">Demonstrate this to your tutor.</span>
+</li>
+<li>the set of tasks and one matching key persona your group will use for Assignment 1. </li>
+<li>first cut at the HE, with the set of problems, with severity ratings, identified in your Heuristic Evaluation.</li>
+</ul>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 3 END -->
+
+</tr><tr>
+
+<!-- Bottom START -->
+<td width="90%" class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;">
+<tr>
+    <td width="91%"></td>
+    <td valign=bottom>
+	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Thu Aug 20 11:15:07 2015</span></td>
+</tr></table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;"><tr><td width="99%">
+</td><td valign=middle>
+  <span style="font-family: helvetica,arial,sans-serif;font-size: 60%;"> Poweredby&nbsp;</span> 
+</td><td valign=bottom>
+  <a href="http://www.it.usyd.edu.au/~bob/web.cgi?Cellerator">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAIAAAD8q9/YAAAA40lEQVR4nOWXMQ7DIAxFPxVnxXOW
+DDlAhizMPi0dEIjapE1ISgbehJFl/S/bQTHOOYyEBcDMT8voBBHZdDQ31OOw+eWGOv9hnlYAr6dl
+9GY4w7ZyxwEohjyG+YbDx/yLMBHnB0AcchGWOflG5/xMaEAZzgZKJ00bLmRl53uHzS/5XE3QRRqo
+dTgi2ojTtqv90R2+UrOB/R3OkwyATEOTN7+UyrRKkXCw5lkZAmWYDDhUFrX0/z1MzNMqehiH9qCy
+mKyn91QRjXHOMfMg7zARDfcsDWc4faVrS9jAle3qgxntb+kN/vGFkIjMAnUAAAAASUVORK5CYII=
+" title="Cellerator Home" alt="[Cellerator]" width=80 height=15 border=0>
+  </a>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Bottom END -->
+
+</tr></table>
+
+<!-- Completed in 0.08 cpu / 0.06 wall seconds. -->
+</body></html>
