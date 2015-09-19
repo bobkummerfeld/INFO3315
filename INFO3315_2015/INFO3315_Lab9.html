@@ -1,0 +1,676 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>INFO3315 Lab9</title>
+<base href="http://bobkummerfeld.github.io/INFO3315/index.html">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<!-- 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+-->
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+.list-group{
+	width: 100px;
+}
+.bs-example{
+   	margin: 20px;
+}
+</style>
+<style type="text/css">
+
+img {max-width:100%}
+
+
+
+
+.tooltip {
+    display:none;
+    background:transparent url(/media/img/tooltip/black_arrow.png);
+    font-size:12px;
+    height:70px;
+    width:160px;
+    padding:25px;
+    color:#eee;
+}
+
+body {
+	margin: 0;
+/*	background-color: #e6e6e6;	*/
+	background-color: #ffffff;
+	border: 0;
+	padding: 2px;
+	color: #000;
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.frame {
+ }
+.framedata { }
+.column { }
+.columndata { }
+.cell { padding: 10px; }
+
+.loginbanner {
+	background-color: #fed;
+	border:	1px solid #dcb;
+	padding: 0px 5px 2px 5px;
+	font-size: 80%; font-weight: bold;
+	color: #39628b;
+}
+.cellbanner {
+	background-color: #fff;
+	/*border:	1px solid #fff; */
+/*
+	border-right:  1px solid #b0b0b0;
+	border-top: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 0px 5px 2px 5px;
+	font-size: 120%; font-weight: bold;
+	color: #39628b;
+}
+.cellbody {
+	background-color: #fff;
+/*
+	border-right:  1px solid #b0b0b0;
+	border-bottom: 1px solid #b0b0b0;
+	border-left:   1px solid #b0b0b0;
+*/
+	border-right:  1px solid #ffffff;
+	border-bottom: 1px solid #ffffff;
+	border-left:   1px solid #ffffff;
+	padding: 10px;
+}
+
+/* order is important */
+/*
+a:link { color: darkblue; }
+*/
+a:visited { color: darkblue; }
+a:hover { color: blue; }
+a:active { color: blue; }
+
+a.non { text-decoration: none; }
+a.smallnon { font-size: 80%; text-decoration: none; }
+
+p.hang {
+	text-indent: -1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.spaced { margin-bottom: 20px; }
+p { margin-bottom: 20px; }
+div.boxed {
+	text-indent: 1em;
+	margin-left: 1em;
+	margin-top: 0;
+	margin-bottom: 20;
+	border: 5px solid gray;
+	width:"50%";
+}
+
+
+pre.darkgreen { color: darkgreen; }
+pre.darkblue { color: darkblue; }
+
+span.logname {
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+}
+
+span.logtext {
+	font-size: 80%;
+}
+
+span.sestext {
+	font-size: 80%;
+	color: darkblue;
+}
+
+button.logout {
+	padding: 0;
+	font-weight: bold;
+	font-size: 80%;
+	color: darkblue;
+	float: right;
+}
+
+button.darkblue {
+	padding: 0;
+	font-weight: bold;
+	color: darkblue;
+}
+
+table.role { margin: 2px; font-size: 90%; font-weight: bold; background-color: #39628b; }
+td.role { text-align: center; font-size: 100%; font-weight: bold; color: #fff; }
+td img.decor { display: block; }
+
+a.external { text-decoration: none; }
+a.external:link { color: #fff }
+a.external:visited { color: #fff }
+a.external:hover { color: #ffc }
+a.external:active { color: #ffc }
+
+span.edit { float: right; }
+a.edit { text-decoration: none; color: #dcb; }
+a.edit:hover { color: blue; }
+a.edit:active { color: blue; }
+</style>
+<script type="text/javascript">//<![CDATA[
+
+var cell_long = "Images/glyphicons_368_collapse.png"
+var cell_short = "Images/glyphicons_369_collapse_top.png"
+
+function expandCollapse(eltid)
+{
+	var element = document.getElementById(eltid);
+	var imgelement = document.getElementById("IMG"+eltid);
+	if (element.style.display == "none")
+	{
+		element.style.display = "block";
+		imgelement.src = cell_short;
+	}
+	else
+	{
+		element.style.display = "none";
+		imgelement.src = cell_long;
+	}
+	
+}
+
+
+$(function() {
+$( document ).tooltip();
+});
+//]]></script>
+
+</head>
+
+<body>
+
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="frame"><tr>
+
+<!-- Top START -->
+<td class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td width="100%" style="position:fixed;  top:0px;left:0px;  z-index:10" id="bannercell" class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="role" style="background:#12416C;">
+  <tr> 
+    <td colspan="3">
+      <img src="Images/pix.gif" width="1" height="1" alt="" hspace="275" vspace="0" class="decor">
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/university_sydney_logo.gif" width="200" height="80" alt="link to University of Sydney Web
+	Page"  border="0" class="decor">
+      </a>
+    </td>
+	<!--
+    <td>
+      <a href="http://www.usyd.edu.au">
+        <img src="Images/top_banner_in02.gif" width="227" height="52" alt="" title="" border="0" class="decor">
+      </a>
+    </td>
+	-->
+    <td width="30%" align="center" class="role" style="padding-right:5px">
+    INFO3315 Human Computer Interaction<br />
+      <a class="external" href="http://www.it.usyd.edu.au">
+        School&nbsp;of&nbsp;Information&nbsp;Technologies
+      </a>
+    </td>
+  </tr>
+</table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="height:100px">X</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Top END -->
+
+</tr><tr>
+
+<!-- Column 1 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td style="position:fixed;  width:120px;height:50px;top:80px;left:7px;  z-index:0" id="menucell" class="columndata">
+
+<!-- Cell START -->
+<script>
+var sessionname = "INFO3315";
+function gothere(where)
+{
+	var i = location.href.lastIndexOf('/');
+	var leading = location.href.slice(0,i);
+	if (location.pathname.slice(-4) == '.cgi')
+	{
+		var j = location.href.lastIndexOf('?');
+		var scriptname = location.href.slice(i+1,j+1);
+	        location.assign(leading+"/"+scriptname+where);
+	}
+	else
+	{
+		location.assign(leading+"/"+sessionname+"_"+where+".html");
+	}
+}
+</script>
+
+<div class="bs-example">
+    <div class="list-group" style="width:110px;">
+
+
+		<a href="javascript: gothere('Home');" class="list-group-item ">
+			Home
+		</a>
+		
+
+		<a href="javascript: gothere('Assess');" class="list-group-item ">
+			Assess
+		</a>
+		
+
+		<a href="javascript: gothere('Resources');" class="list-group-item ">
+			Resources
+		</a>
+		
+
+		<a href="javascript: gothere('Labs');" class="list-group-item ">
+			Labs
+		</a>
+		
+</div>
+</div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 1 END -->
+
+
+<!-- Column 2 START -->
+<td class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<div style="min-width: 140px"> &nbsp; </div>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 2 END -->
+
+
+<!-- Column 3 START -->
+<td width="90%" class="framedata" valign="top">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+</td></tr><tr><td class="cellbody">
+<h1>
+Week 9: Python and bottle + prototype refinement
+</h1>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab9/2.10_homework&amp;Return=Lab9" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+<div>Homework</div>
+</td></tr><tr><td class="cellbody">
+<ol>
+<li>Review the grading for the Week 12 assessments</li>
+<li>Python homework</li>
+<li>Bottle homework</li>
+</ol>
+<p/>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<div>Introduction to Python and Web Servers</div>
+</td></tr><tr><td class="cellbody">
+<p>
+In this part of the technical work, you will create a minimal webserver using a very lightweight tool, Bottle.
+This is widely used for internal facing prototyping projects.
+Because it is so small and simple, you can study it to learn about the key ideas that
+carry across to the many heavier frameworks (eg Django).
+</p>
+<p>
+When a web browser requests a page a web server program is passed the
+URL. The web server then generates the HTML page and sends it back to
+the browser for rending and display. The web server can be large and
+complex and may hand job of page generation to another program. Or the
+web server can be a much simpler program that both handles the request
+and generates the page. The difference is in the level of performance:
+how many browser clients can be services at once. The generation of
+the web page is almost the same in each case, with the request handling
+being done by system supplied components.
+</p>
+<p>
+In this course we are going to look at the generation of web pages using a very light-weight web server written in the Python language.
+
+</p>
+<p>
+Web page generation also ranges from simple to complex. At one extreme we
+might have a pre-prepared file of HTML that is returned to the browser
+in response to a URL. Alternatively, we could have complex logic that
+generates a custom HTML page. Web pages tend to have some content that
+is static and remains the same, and other parts which change depending
+on many factors. To handle this situation, web servers often make use
+of templates which contain all the static content plus markers and logic
+for the dynamically changing parts.
+</p>
+<p>
+In INFO3315 we will be using the following tools:
+</p>
+<ul>
+<li> Python for the web server and page generation logic</li>
+<li>    bottle for the web request processing</li>
+<li>    bottle for the template processing</li>
+</ul>
+<p>
+Bottle is an example of a web micro-framework and consists of a single, small python program. 
+</p>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPpython"><img id="IMGpython"  onclick="javascript: expandCollapse('python');" title="expand/collapse">&nbsp;&nbsp;Python (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"python"); elt.src = cell_long; $("#TIPpython img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="python" style="display: none;">
+<p>
+Brief background:
+<br/>
+The Python programming language is widely used in web development and general purpose programming. It is a
+dynamically typed and also strongly typed object oriented language with the usual control structures. It is
+possible to write small and readable programs for many problems in Python.
+For details of the history and language philosophy, you can consult the 
+<a href="http://en.wikipedia.org/wiki/Python_%28programming_language%29">wikipedia article</a>.
+</p>
+<p>
+Your homework is to get a working knowledge of Python:<br/>
+Complete the <a href="http://www.learnpython.org/"><b>Learn Python</b></a> tutorial up to
+the end of the "Basics", including "Modules and Packages". 
+Each topic is short, with example code you can run.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPbottle"><img id="IMGbottle"  onclick="javascript: expandCollapse('bottle');" title="expand/collapse">&nbsp;&nbsp;Bottle (Homework) </div>
+        <script> var elt = document.getElementById("IMG"+"bottle"); elt.src = cell_long; $("#TIPbottle img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="bottle" style="display: none;">
+<p>
+Bottle is a fast, simple and lightweight micro web-framework for Python. 
+It is contained in a single file and only depends on modules installed in the standard Python library.
+This makes it trivial to install: just put the bottle.py file in the same directory as your web server program.
+</p>
+<p>
+The Bottle framework <a href="http://bottlepy.org/docs/dev/index.html">web page</a> has extensive documentation and
+examples. 
+To get started, take a copy of the
+<a href="http://www.it.usyd.edu.au/~info3315/2014/Files/bottle.py">bottle.py file</a> (right click and "save as").
+Place it in the directory you are using for development.
+To make your first web server, cut and paste the example "Hello World" code on the bottle web page 
+into a file called web.py.
+</p>
+<p>
+<pre>
+from bottle import route, run, template
+
+@route('/hello/&lt;name&gt;')
+def index(name):
+    return template('&lt;b&gt;Hello {{name}}&lt;/b&gt;!', name=name)
+
+run(host='localhost', port=8080)
+</pre>
+</p>
+<p>
+Here is a line by line description of that first web server program:<br/>
+<pre>
+from bottle import route, run, template
+</pre>
+This line imports functions from the bottle file that will be used in our example.
+</p>
+<p>
+<pre>
+@route('/hello/&lt;name&gt;')
+</pre>
+This line is an example of a python <i>decorator</i>. It tells python to "wrap" the function below in another function.
+In this case the function "route" will be called with the string '/hello/&lt;name&gt;' and the "index" function below as arguments. This allows
+preprocessing to be done before "index" is called. In this case it is specifying that "index" should be called
+when a URL that ends in '/hello/&lt;name&gt;' is used, where '&lt;name&gt;' can be any string. 
+The actual string for '&lt;name&gt;' is then passed to "index" as an argument.
+</p>
+<p>
+For example, if we used the URL "http://localhost:8080/hello/Bob", then "index" would be called with "Bob" as the argument.
+</p>
+</p>
+<p>
+<pre>
+def index(name):
+</pre>
+This is the function header for "index".
+</p>
+<p>
+<pre>
+    return template('&lt;b&gt;Hello {{name}}&lt;/b&gt;!', name=name)
+</pre>
+This line indicates that the function "template" is called with two arguments: a template string and a named argument.
+The template string is returned with elements inside double braces {{ }} replaced by one of the named arguments.
+In this case {{name}} is replaced by the value of the variable "name".
+</p>
+<p>
+
+<pre>
+run(host='localhost', port=8080)
+</pre>
+Finally, the main bottle driver function, "run" is called. Run will open network port 8080 and listen for requests. 
+It will then <i>route</i> the request to relevant functions for processing, depending on the form of the URL.
+</p>
+
+<p>
+Put the example code in a file called web.py and run it with the command "python web.py". Then, using your web browser, 
+try URLs such as http://127.0.0.1:8080/hello/world
+</p>
+<p>
+Note that http://localhost:8080/hello/world  should also work but some systems do not allow this.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPtemplates"><img id="IMGtemplates"  onclick="javascript: expandCollapse('templates');" title="expand/collapse">&nbsp;&nbsp;Bottle Templates (Lab) </div>
+        <script> var elt = document.getElementById("IMG"+"templates"); elt.src = cell_long; $("#TIPtemplates img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="templates" style="display: none;">
+<p>
+Bottle has a builtin <i>template engine</i> that will process a string or file applying 
+whatever rules it contains. The example in the previous module shows a string with an embedded
+variable {{name}} being replaced by the value of the variable "name". Bottle templates have the
+ability to execute python statements embedded in the template to produce HTML.
+</p>
+<p>
+View the tutorial on <a href="http://bottlepy.org/docs/dev/stpl.html">Bottle templates</a>.
+</p>
+<p>
+
+
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPwebserver"><img id="IMGwebserver"  onclick="javascript: expandCollapse('webserver');" title="expand/collapse">&nbsp;&nbsp;Web Server (Lab) </div>
+        <script> var elt = document.getElementById("IMG"+"webserver"); elt.src = cell_long; $("#TIPwebserver img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="webserver" style="display: none;">
+<p>
+You now have knowledge of the basic web technologies HTML, CSS and Javascript, as well as several tools:
+bootstrap, jQuery and now a web "framework", bottle, with associated template engine. 
+By combining these tools with a database
+you can put together a complete web server that serves web pages with customised content.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+ <div id="TIPrefine"><img id="IMGrefine"  onclick="javascript: expandCollapse('refine');" title="expand/collapse">&nbsp;&nbsp;Refine prototype (Lab) </div>
+        <script> var elt = document.getElementById("IMG"+"refine"); elt.src = cell_long; $("#TIPrefine img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="refine" style="display: none;">
+<p>
+This part of the lab is for your group to decide on the refinements you will make to your prototype,
+based on what you learnt from last lab's Heuristic Evaluation.
+</p>
+<p>
+You should also discuss whether the group will aim to create a backend-ed system or stay with Balsamiq prototypes.
+You should discuss your plans with your tutor, inclduing what tools your propose to use.
+</p>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
+<tr><td align=left class="cellbanner">
+<span class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab9/2.90_checkpoints_moved_from_6_now9&amp;Return=Lab9" class="edit">
+			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
+		</a></span>
+ <div id="TIPcheckpoints2"><img id="IMGcheckpoints2"  onclick="javascript: expandCollapse('checkpoints2');" title="expand/collapse">&nbsp;&nbsp;Checkpoints  </div>
+        <script> var elt = document.getElementById("IMG"+"checkpoints2"); elt.src = cell_long; $("#TIPcheckpoints2 img[title]").tooltip(); </script> 
+</td></tr><tr><td class="cellbody">
+<div id="checkpoints2" style="display: none;">
+At the end of this lab session you should have completed:
+<ul>
+<li> the simple bottle example given in the module on bottle
+</li>
+<li> the lab tasks based on using bottle
+</li>
+</ul>
+<P>
+<span style="background-color:#ffffcc;">Demonstrate this to your tutor.</span>
+<P>
+</div>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Column 3 END -->
+
+</tr><tr>
+
+<!-- Bottom START -->
+<td width="90%" class="framedata" valign="top" colspan="3">
+<table cellpadding="0" width="100%" cellspacing="0" border="0" class="column">
+<tr><td class="columndata">
+
+<!-- Cell START -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;">
+<tr>
+    <td width="91%"></td>
+    <td valign=bottom>
+	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Sun Sep 20 00:04:17 2015</span></td>
+</tr></table>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 2px;"><tr><td width="99%">
+</td><td valign=middle>
+  <span style="font-family: helvetica,arial,sans-serif;font-size: 60%;"> Poweredby&nbsp;</span> 
+</td><td valign=bottom>
+  <a href="http://www.it.usyd.edu.au/~bob/web.cgi?Cellerator">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAPCAIAAAD8q9/YAAAA40lEQVR4nOWXMQ7DIAxFPxVnxXOW
+DDlAhizMPi0dEIjapE1ISgbehJFl/S/bQTHOOYyEBcDMT8voBBHZdDQ31OOw+eWGOv9hnlYAr6dl
+9GY4w7ZyxwEohjyG+YbDx/yLMBHnB0AcchGWOflG5/xMaEAZzgZKJ00bLmRl53uHzS/5XE3QRRqo
+dTgi2ojTtqv90R2+UrOB/R3OkwyATEOTN7+UyrRKkXCw5lkZAmWYDDhUFrX0/z1MzNMqehiH9qCy
+mKyn91QRjXHOMfMg7zARDfcsDWc4faVrS9jAle3qgxntb+kN/vGFkIjMAnUAAAAASUVORK5CYII=
+" title="Cellerator Home" alt="[Cellerator]" width=80 height=15 border=0>
+  </a>
+</td></tr></table>
+<!-- Cell END -->
+
+</td></tr>
+</table></td>
+<!-- Bottom END -->
+
+</tr></table>
+
+<!-- Completed in 0.13 cpu / 0.13 wall seconds. -->
+</body></html>
