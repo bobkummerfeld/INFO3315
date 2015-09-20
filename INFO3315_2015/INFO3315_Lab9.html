@@ -462,6 +462,8 @@ This makes it trivial to install: just put the bottle.py file in the same direct
 <p>
 The Bottle framework <a href="http://bottlepy.org/docs/dev/index.html">web page</a> has extensive documentation and
 examples. 
+There is a very complete <a href="http://bottlepy.org/docs/dev/tutorial.html">tutorial</a> that you should read.
+<p> 
 To get started, take a copy of the
 <a href="http://www.it.usyd.edu.au/~info3315/2014/Files/bottle.py">bottle.py file</a> (right click and "save as").
 Place it in the directory you are using for development.
@@ -553,10 +555,16 @@ ability to execute python statements embedded in the template to produce HTML.
 <p>
 View the tutorial on <a href="http://bottlepy.org/docs/dev/stpl.html">Bottle templates</a>.
 </p>
+Another way to use the template engine is to put your template into a separate file and pass the name as argument to the "template" function.
+<pre>
+@route('/hello/&lt;name&gt;')
+def index(name):
+    return template('myhome.tpl', name=name)
+</pre>
+If you place a file called myhome.tpl in the same directory as the bottle server, the template engine will scan it and return the converted text.
 <p>
-
-
-</p>
+<p>
+Exercise: create a file with a template and modify your bottle server program to use it instead of the template string in the "index" function.
 </div>
 </td></tr></table>
 <!-- Cell END -->
@@ -577,6 +585,15 @@ bootstrap, jQuery and now a web "framework", bottle, with associated template en
 By combining these tools with a database
 you can put together a complete web server that serves web pages with customised content.
 </p>
+<p>
+Exercise: modify your home page to turn it into a bottle template and serve it using your bottle web server.
+<p>
+Exercise: modify the web server "index" function to keep a count of the number of times that page is fetched and 
+display the page counter on your home page using a template element.
+<p>
+Note that the counter will start at zero every time you restart the web server. To keep a persistent value for the page count the
+value needs to be stored in static storage, a file. Modify your web server to read the number from a file on 
+start up and save it to the file every time it is incremented.
 </div>
 </td></tr></table>
 <!-- Cell END -->
@@ -618,7 +635,7 @@ Your tutor will review all of these to help check for the feasibility of what yo
 <table cellpadding="0" width="100%" cellspacing="0" border="0" class="cell">
 <tr><td align=left class="cellbanner">
 <span class="edit">
-		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab9/2.90_checkpoints_moved_from_6_now9&amp;Return=Lab9" class="edit">
+		<a href="/info3315.cgi?Context=Admin/Edit&amp;_Context=Lab9/2.90_checkpoints&amp;Return=Lab9" class="edit">
 			<img src="Images/glyphicons_150_edit.png" alt="edit" width="12" height="12">
 		</a></span>
  <div id="TIPcheckpoints2"><img id="IMGcheckpoints2"  onclick="javascript: expandCollapse('checkpoints2');" title="expand/collapse">&nbsp;&nbsp;Checkpoints  </div>
@@ -657,7 +674,7 @@ At the end of this lab session you should have completed:
 <tr>
     <td width="91%"></td>
     <td valign=bottom>
-	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Sun Sep 20 06:59:33 2015</span></td>
+	<span style="font-family: helvetica,arial,sans-serif;font-size: 60%;">Last changed: Sun Sep 20 10:46:10 2015</span></td>
 </tr></table>
 
 
@@ -682,5 +699,5 @@ mKyn91QRjXHOMfMg7zARDfcsDWc4faVrS9jAle3qgxntb+kN/vGFkIjMAnUAAAAASUVORK5CYII=
 
 </tr></table>
 
-<!-- Completed in 0.10 cpu / 0.07 wall seconds. -->
+<!-- Completed in 0.10 cpu / 0.08 wall seconds. -->
 </body></html>
